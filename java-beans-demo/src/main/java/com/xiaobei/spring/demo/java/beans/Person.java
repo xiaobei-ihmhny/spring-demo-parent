@@ -6,7 +6,7 @@ package com.xiaobei.spring.demo.java.beans;
  */
 public class Person {
 
-    private String name;
+    private String name; // Property
 
     private Integer age;
 
