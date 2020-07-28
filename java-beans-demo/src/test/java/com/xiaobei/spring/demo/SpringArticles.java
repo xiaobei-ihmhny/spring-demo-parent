@@ -1,0 +1,52 @@
+package com.xiaobei.spring.demo;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+
+/**
+ * 获取spring课程信息
+ * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
+ * @date 2020/7/28 20:32
+ */
+public class SpringArticles {
+
+    public static void main(String[] args) throws IOException {
+        List<String> jsonStr = Files.readAllLines(
+                Paths.get("E:\\project\\spring-demo-parent\\java-beans-demo\\src\\test\\resources\\spring.json"));
+        JSONObject jsonObject = JSON.parseObject(jsonStr.get(0));
+        JSONObject data = jsonObject.getJSONObject("data");
+        JSONArray list = data.getJSONArray("list");
+        List<JSONObject> lessonList = list.toJavaList(JSONObject.class);
+        AtomicInteger countSeconds = new AtomicInteger();
+        LocalDate today = LocalDate.now();
+        for (JSONObject object : lessonList) {
+            String title = object.getString("article_title").replace(" |", "");
+            String time = object.getString("video_time");
+            LocalTime localTime = LocalTime.parse(time, DateTimeFormatter.ofPattern("HH:mm:ss"));
+            // 当前课程需要的时间
+            int localLessonCostSeconds = localTime.toSecondOfDay();
+            countSeconds.addAndGet(localLessonCostSeconds);
+            int currentCountSeconds = countSeconds.get();
+            if (currentCountSeconds >= 5400) {
+//                System.out.println("=========" + currentCountSeconds);
+                countSeconds.set(0);
+                today = today.plusDays(1L);
+            }
+            String result = title + " | " + time + " | " + today.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            System.out.println(result);
+        }
+        System.out.println(countSeconds.get() / 60);
+        System.out.println(countSeconds.get() / 60 / 60);
+//        System.out.println(jsonObject);
+    }
+}
