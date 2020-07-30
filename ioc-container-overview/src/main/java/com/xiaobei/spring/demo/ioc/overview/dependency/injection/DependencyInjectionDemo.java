@@ -3,6 +3,7 @@ package com.xiaobei.spring.demo.ioc.overview.dependency.injection;
 import com.xiaobei.spring.demo.ioc.overview.repository.UserRespoitory;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.env.Environment;
 
 /**
  *
@@ -18,8 +19,24 @@ public class DependencyInjectionDemo {
 
         // 根据Bean类型注入 集合Bean对象
 //        injectionCollectionByTypeInRealTime(beanFactory);
-        injectionInsideDependencyNonBean(beanFactory);
+//        injectionInsideDependencyNonBean(beanFactory);
+        showBeansWithInContainer(beanFactory);
 
+    }
+
+    /**
+     * 展示容器内建的Bean对象
+     * Spring IoC依赖来源：
+     * 一：自定义Bean
+     * 二：容器内建的Bean
+     * 三：容器内建依赖
+     * @param beanFactory
+     */
+    private static void showBeansWithInContainer(BeanFactory beanFactory) {
+        // 其中 {@link Environment} 是外部化配置和profile的综合体
+        // TODO 会在Environment抽象一节中单独讨论，情况比较复杂
+        Environment environment = beanFactory.getBean(Environment.class);
+        System.out.println(environment);
     }
 
     /**
@@ -28,8 +45,9 @@ public class DependencyInjectionDemo {
      * @param beanFactory
      */
     private static void injectionInsideDependencyNonBean(BeanFactory beanFactory) {
+        // 自定义Bean
         UserRespoitory userRepository = beanFactory.getBean("userRepository", UserRespoitory.class);
-        // 依赖注入
+        // 依赖注入(内建依赖)
         System.out.println(userRepository.getBeanFactory());
         System.out.println(userRepository.getBeanFactory() == beanFactory);
         // 依赖查找（报错 NoSuchBeanDefinitionException）
