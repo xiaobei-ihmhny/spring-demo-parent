@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util https://www.springframework.org/schema/util/spring-util.xsd">
 
     <!-- 通过import导入 dependency-lookup.xml配置文件 -->
     <import resource="dependency-lookup.xml"/>
+
+    <!-- <util:list> 属于硬编码（手动配置），不太好用 -->
+    <!--<bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRespoitory">
+        <property name="users">
+            <util:list>
+                <ref bean="user"/>
+                <ref bean="superUser"/>
+            </util:list>
+        </property>
+    </bean>-->
+
+    <bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRespoitory" autowire="byType"/>
 
 </beans>
