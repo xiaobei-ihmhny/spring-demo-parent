@@ -1,6 +1,6 @@
-package com.xiaobei.spring.demo.ioc.overview.dependency.domain;
+package com.xiaobei.spring.demo.ioc.overview.domain;
 
-import com.xiaobei.spring.demo.ioc.overview.dependency.annotation.Super;
+import com.xiaobei.spring.demo.ioc.overview.annotation.Super;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>

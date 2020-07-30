@@ -1,4 +1,4 @@
-package com.xiaobei.spring.demo.ioc.overview.dependency.annotation;
+package com.xiaobei.spring.demo.ioc.overview.annotation;
 
 import java.lang.annotation.*;
 

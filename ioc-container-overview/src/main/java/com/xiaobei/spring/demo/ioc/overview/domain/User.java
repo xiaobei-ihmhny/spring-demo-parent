@@ -1,4 +1,4 @@
-package com.xiaobei.spring.demo.ioc.overview.dependency.domain;
+package com.xiaobei.spring.demo.ioc.overview.domain;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>

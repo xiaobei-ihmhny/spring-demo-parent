@@ -1,7 +1,7 @@
 package com.xiaobei.spring.demo.ioc.overview.dependency.lookup;
 
-import com.xiaobei.spring.demo.ioc.overview.dependency.annotation.Super;
-import com.xiaobei.spring.demo.ioc.overview.dependency.domain.User;
+import com.xiaobei.spring.demo.ioc.overview.annotation.Super;
+import com.xiaobei.spring.demo.ioc.overview.domain.User;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.ListableBeanFactory;
 import org.springframework.beans.factory.ObjectFactory;
@@ -33,7 +33,7 @@ public class DependencyLookupDemo {
     private static void lookupByAnnotationTypeInRealTime(BeanFactory beanFactory) {
         if (beanFactory instanceof ListableBeanFactory) {
             ListableBeanFactory listableBeanFactory = (ListableBeanFactory) beanFactory;
-            Map<String, User> users = (Map)listableBeanFactory.getBeansWithAnnotation(Super.class);
+            Map<String, User> users = (Map) listableBeanFactory.getBeansWithAnnotation(Super.class);
             System.out.println("查找到所有标注了 @Super 的 User 集合对象为：" + users);
         }
     }
