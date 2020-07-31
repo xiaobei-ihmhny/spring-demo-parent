@@ -20,7 +20,17 @@ public class DependencyInjectionDemo {
         // 根据Bean类型注入 集合Bean对象
 //        injectionCollectionByTypeInRealTime(beanFactory);
 //        injectionInsideDependencyNonBean(beanFactory);
-        showBeansWithInContainer(beanFactory);
+//        showBeansWithInContainer(beanFactory);
+        whoIsIoCContainer(beanFactory);
+
+    }
+
+    private static void whoIsIoCContainer(BeanFactory beanFactory) {
+        // 自定义Bean
+        UserRespoitory userRepository = beanFactory.getBean("userRepository", UserRespoitory.class);
+        // 这个表达式为什么不会成立？
+        // ApplicationContext就是BeanFactory
+        System.out.println(userRepository.getBeanFactory() == beanFactory);
 
     }
 
