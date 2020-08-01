@@ -105,6 +105,7 @@ public class BeanInstantiationDemo {
     /**
      * 通过AutowireCapableBeanFactory#createBean(java.lang.Class, int ,boolean)
      * TODO 这样操作的话，new ClassPathXmlApplicationContext()... 就没有用了？？？？
+     * TODO 而且通过这种方式如何设置相关属性值呢？？
      */
     @Test
     public void instanceBeanByAutowireCapableBeanFactory() {
@@ -112,7 +113,9 @@ public class BeanInstantiationDemo {
                 new ClassPathXmlApplicationContext("classpath:/META-INF/special-bean-instantiation-context.xml");
         AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory();
         PersonFactory personFactory = beanFactory.createBean(DefaultPersonFactory.class);
+        Person person = beanFactory.createBean(Person.class);
         System.out.println(personFactory.getInstance());
+        System.out.println(person);
 
     }
 }
