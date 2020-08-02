@@ -6,6 +6,13 @@ package com.xiaobei.spring.demo.bean.definition.initialization;
  */
 public class BeanInitialization {
 
+    private String msg;
+
+    public BeanInitialization(String msg) {
+        this.msg = msg;
+        System.out.println("msg：" + msg);
+    }
+
     /**
      * 自定义初始化方法——xml方法
      */
@@ -27,5 +34,10 @@ public class BeanInitialization {
         System.out.println("自定义初始化方法：通过java api的方式完成初始化");
     }
 
-
+    @Override
+    public String toString() {
+        return "BeanInitialization{" +
+                "msg='" + msg + '\'' +
+                '}';
+    }
 }

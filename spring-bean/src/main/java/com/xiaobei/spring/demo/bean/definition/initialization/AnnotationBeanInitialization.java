@@ -10,6 +10,6 @@ public class AnnotationBeanInitialization {
 
     @Bean(initMethod = "initBeanMethodWithAnnotation")
     public BeanInitialization beanInitialization() {
-        return new BeanInitialization();
+        return new BeanInitialization("");
     }
 }
