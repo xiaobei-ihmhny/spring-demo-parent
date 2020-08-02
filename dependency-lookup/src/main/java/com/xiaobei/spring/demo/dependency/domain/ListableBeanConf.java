@@ -25,5 +25,10 @@ public class ListableBeanConf {
         return new Lesson().setId(44).setName("集合类型依赖查找——英语");
     }
 
+    @Bean
+    public CustomLesson customLesson() {
+        return new CustomLesson().setId(44).setName("集合类型依赖查找——自定义课程");
+    }
+
 
 }
