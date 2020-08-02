@@ -8,6 +8,9 @@ public class BeanInitialization {
 
     private String msg;
 
+    public BeanInitialization() {
+    }
+
     public BeanInitialization(String msg) {
         this.msg = msg;
         System.out.println("msg：" + msg);
