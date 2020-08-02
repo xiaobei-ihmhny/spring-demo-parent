@@ -1,7 +1,6 @@
 package com.xiaobei.spring.demo.dependency.lookup;
 
 import com.xiaobei.spring.demo.dependency.domain.Lesson;
-import com.xiaobei.spring.demo.dependency.domain.LessonPrototype;
 import com.xiaobei.spring.demo.dependency.domain.Lookup;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;

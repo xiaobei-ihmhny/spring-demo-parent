@@ -22,16 +22,18 @@ public class Lesson {
         return id;
     }
 
-    public void setId(Integer id) {
+    public Lesson setId(Integer id) {
         this.id = id;
+        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public Lesson setName(String name) {
         this.name = name;
+        return this;
     }
 
     @Override
