@@ -1,9 +1,6 @@
 package com.xiaobei.spring.demo.dependency.lookup;
 
-import com.xiaobei.spring.demo.dependency.domain.CustomLesson;
-import com.xiaobei.spring.demo.dependency.domain.Lesson;
-import com.xiaobei.spring.demo.dependency.domain.LessonPrototype;
-import com.xiaobei.spring.demo.dependency.domain.ListableBeanConf;
+import com.xiaobei.spring.demo.dependency.domain.*;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryUtils;
@@ -13,6 +10,14 @@ import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.util.Assert;
+import org.springframework.beans.factory.ListableBeanFactory;
+import org.springframework.util.StringUtils;
+
+import java.lang.annotation.Annotation;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 层次性依赖查找示例
@@ -72,9 +77,19 @@ public class HierarchicalDependencyLookupDemo {
         reader.loadBeanDefinitions(location);
         return beanFactory;
     }
+    /**
+     * 通过java代码构造另一个应用上下文
+     * @return
+     */
+    public ConfigurableListableBeanFactory getBeanFactoryWithAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(AncestorsBeanConf.class);
+        applicationContext.refresh();
+        return applicationContext.getBeanFactory();
+    }
 
     /**
-     * 先从父应用上下文中查找相应的bean，如果父上下文中没有，再在子类中查找
+     * 先从子应用上下文中查找相应的bean，如果子上下文中没有，再在父上下文中查找
      */
     @Test
     public void getBeanByNameAndTypeFromAllParents() {
@@ -125,7 +140,12 @@ public class HierarchicalDependencyLookupDemo {
     }
 
     /**
-     * TODO 单一类型查找，报错
+     * 使用{@link BeanFactoryUtils#beanOfTypeIncludingAncestors(ListableBeanFactory, java.lang.Class)}
+     * 在所有上下文中查询指定类型的bean。若父类及子类中同时含有，则会返回父类中的bean
+     *
+     * 执行结果：
+     * CustomLesson{id=44, name='集合类型依赖查找——自定义课程'}
+     * LessonPrototype{id=45, name='computer'}
      */
     @Test
     public void getBeanByTypeFromAllParent() {
@@ -135,12 +155,50 @@ public class HierarchicalDependencyLookupDemo {
         HierarchicalBeanFactory parentBeanFactory = getBeanFactoryWithXml();
         beanFactory.setParentBeanFactory(parentBeanFactory);
         applicationContext.refresh();
-        // 查询父上下文中的bean
-        LessonPrototype lessonPrototype = BeanFactoryUtils.beanOfType(beanFactory, LessonPrototype.class);
-        System.out.println(lessonPrototype);
         // 查询当前上下文中的bean
-        CustomLesson customLesson = BeanFactoryUtils.beanOfType(beanFactory, CustomLesson.class);
+        CustomLesson customLesson = BeanFactoryUtils.beanOfTypeIncludingAncestors(beanFactory, CustomLesson.class);
         System.out.println(customLesson);
+        // 查询父上下文中的bean
+        LessonPrototype lessonPrototype = BeanFactoryUtils.beanOfTypeIncludingAncestors(beanFactory, LessonPrototype.class);
+        System.out.println(lessonPrototype);
+        applicationContext.close();
+    }
+    /**
+     * TODO 这个是 “双亲委派” 吗？怎么感觉这个和双亲的逻辑是反的呢？
+     * 根据Bean类型查找实例列表
+     * 使用{@link BeanFactoryUtils#beansOfTypeIncludingAncestors(ListableBeanFactory, java.lang.Class)}
+     * 查找所有应用上下文中含有的指定类型的bean实例集合
+     */
+    @Test
+    public void getBeanByTypeIncludingAncestors() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(ListableBeanConf.class);
+        ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
+        HierarchicalBeanFactory parentBeanFactory = getBeanFactoryWithXml();
+        beanFactory.setParentBeanFactory(parentBeanFactory);
+        applicationContext.refresh();
+        // 查询所有应用上下文中的bean
+        Map<String, Lesson> lessonMap = BeanFactoryUtils.beansOfTypeIncludingAncestors(beanFactory, Lesson.class);
+        System.out.println(lessonMap);
+        applicationContext.close();
+    }
+
+    /**
+     * TODO 如果父、子应用上下文中含有同类型、同名称的bean，但只有父上下文中存在注解标记，那需要查出来吗？目前的逻辑是查不出来的！
+     * 使用{@link BeanFactoryUtils#beanNamesForAnnotationIncludingAncestors(ListableBeanFactory, java.lang.Class)}
+     * 来获取所有应用上下文中含有指定注解标记的bean
+     */
+    @Test
+    public void getBeanNamesForTypeIncludingAncestors() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(ListableBeanConf.class);
+        ConfigurableListableBeanFactory beanFactory = applicationContext.getBeanFactory();
+        HierarchicalBeanFactory parentBeanFactory = getBeanFactoryWithAnnotation();
+        beanFactory.setParentBeanFactory(parentBeanFactory);
+        applicationContext.refresh();
+        // 查询所有应用上下文中的含有@MyLesson标记的bean
+        String[] beanNames = BeanFactoryUtils.beanNamesForAnnotationIncludingAncestors(beanFactory, MyLesson.class);
+        System.out.println(Arrays.toString(beanNames));
         applicationContext.close();
     }
 }
