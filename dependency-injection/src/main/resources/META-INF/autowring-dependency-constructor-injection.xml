@@ -1,0 +1,25 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="hui" class="com.xiaobei.spring.demo.dependency.domain.User">
+        <constructor-arg name="name" value="hui"/>
+        <constructor-arg name="age" value="10"/>
+    </bean>
+    <bean id="user" class="com.xiaobei.spring.demo.dependency.domain.User">
+        <constructor-arg name="name" value="xiaobei"/>
+        <constructor-arg name="age" value="56"/>
+    </bean>
+
+    <!-- TODO 构造器注入中不能使用parent属性吗？？？ -->
+    <bean id="superUser" class="com.xiaobei.spring.demo.dependency.domain.SuperUser">
+        <constructor-arg index="0" value="10"/>
+        <constructor-arg index="1" value="xiaobei"/>
+        <constructor-arg index="2" value="北京"/>
+    </bean>
+
+    <!-- 手动注入——构造器注入 -->
+    <bean class="com.xiaobei.spring.demo.dependency.domain.UserHolder" autowire="constructor"/>
+
+</beans>
