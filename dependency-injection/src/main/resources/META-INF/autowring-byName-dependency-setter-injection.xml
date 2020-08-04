@@ -1,0 +1,18 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.xiaobei.spring.demo.dependency.domain.User">
+        <property name="name" value="xiaobei"/>
+        <property name="age" value="10"/>
+    </bean>
+
+    <bean id="superUser" class="com.xiaobei.spring.demo.dependency.domain.SuperUser"
+          parent="user">
+        <property name="address" value="北京"/>
+    </bean>
+
+    <bean class="com.xiaobei.spring.demo.dependency.domain.UserHolder" autowire="byName"/>
+
+</beans>

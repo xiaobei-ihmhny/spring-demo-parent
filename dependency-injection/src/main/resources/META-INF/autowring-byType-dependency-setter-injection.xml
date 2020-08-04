@@ -1,0 +1,23 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="user" class="com.xiaobei.spring.demo.dependency.domain.User">
+        <property name="name" value="xiaobei"/>
+        <property name="age" value="10"/>
+    </bean>
+
+    <bean id="superUser" class="com.xiaobei.spring.demo.dependency.domain.SuperUser"
+          parent="user" primary="true">
+        <property name="address" value="北京"/>
+    </bean>
+
+    <!--
+    在本例中byType类型的自动注入就会产生歧义，
+    要么去掉一个bean，要么指定其中一个bean为primary，否则不能使用autowiring，
+    本例中指定 superUser为primary
+    -->
+    <bean class="com.xiaobei.spring.demo.dependency.domain.UserHolder" autowire="byType"/>
+
+</beans>

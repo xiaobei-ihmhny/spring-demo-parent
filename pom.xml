@@ -23,6 +23,7 @@
         <module>spring-bean</module>
         <module>spring-demo-common</module>
         <module>dependency-lookup</module>
+        <module>dependency-injection</module>
     </modules>
 
     <dependencyManagement>
