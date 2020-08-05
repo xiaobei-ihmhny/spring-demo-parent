@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="basicTypeDemo" class="com.xiaobei.spring.demo.dependency.domain.CollectionTypeDemo">
+        <property name="byteArray" value="abcdefg"/>
+        <!--<property name="booleanList" value="true,false,true"/>-->
+        <property name="booleanList">
+            <list>
+                <value>true</value>
+                <value>false</value>
+                <value>true</value>
+            </list>
+        </property>
+        <!--<property name="enumTypeSet" value="BEIJING,ZHUHAI"/>-->
+        <property name="enumTypeArray" value="BEIJING,ZHUHAI"/>
+        <property name="enumTypeList">
+            <list>
+                <value>ZHUHAI</value>
+                <value>BEIJING</value>
+            </list>
+        </property>
+        <property name="properties" value="1:name,2:age"/>
+        <property name="clazzSortedSet" value="java.lang.Math,com.xiaobei.spring.demo.dependency.domain.User"/>
+    </bean>
+
+</beans>
