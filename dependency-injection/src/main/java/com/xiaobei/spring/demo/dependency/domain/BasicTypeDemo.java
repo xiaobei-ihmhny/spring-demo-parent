@@ -28,6 +28,8 @@ public class BasicTypeDemo {
      */
     private Resource resourceLocation;
 
+    private Class clazz;
+
     public byte getByteType() {
         return byteType;
     }
@@ -64,6 +66,15 @@ public class BasicTypeDemo {
         return this;
     }
 
+    public Class getClazz() {
+        return clazz;
+    }
+
+    public BasicTypeDemo setClazz(Class clazz) {
+        this.clazz = clazz;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "BasicTypeDemo{" +
@@ -71,6 +82,7 @@ public class BasicTypeDemo {
                 ", basicType=" + basicType +
                 ", enumType=" + enumType +
                 ", resourceLocation=" + resourceLocation +
+                ", clazz=" + clazz +
                 '}';
     }
 }
