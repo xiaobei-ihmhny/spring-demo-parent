@@ -47,7 +47,7 @@ public class QualifierAnnotationDependencyInjectionDemo {
 
     /**
      * 示例{@link Qualifier}的扩展注解{@link QualifierDomainGroup}对Bean进行分组
-     * 例如 sping-cloud中的 {@link LoadBalanced} 就是对{@link Qualifier}扩展
+     * 例如 spring-cloud中的 {@link LoadBalanced} 就是对{@link Qualifier}扩展
      * [QualifierDomain{id=63, name='限定注入3'}, QualifierDomain{id=63, name='限定注入4'}, QualifierDomain{id=63, name='限定注入5'}, QualifierDomain{id=63, name='限定注入6'}]
      * [QualifierDomain{id=63, name='限定注入5'}, QualifierDomain{id=63, name='限定注入6'}]
      */
