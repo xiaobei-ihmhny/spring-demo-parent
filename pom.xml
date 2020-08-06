@@ -15,6 +15,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <fastjson.version>1.2.62</fastjson.version>
         <junit.version>4.12</junit.version>
+        <inject.version>1</inject.version>
     </properties>
 
     <modules>
@@ -59,6 +60,13 @@
                 <version>${junit.version}</version>
                 <scope>test</scope>
             </dependency>
+            <!-- https://mvnrepository.com/artifact/javax.inject/javax.inject -->
+            <dependency>
+                <groupId>javax.inject</groupId>
+                <artifactId>javax.inject</artifactId>
+                <version>${inject.version}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
