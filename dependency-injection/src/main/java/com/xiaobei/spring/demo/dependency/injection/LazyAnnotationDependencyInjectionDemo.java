@@ -1,6 +1,6 @@
 package com.xiaobei.spring.demo.dependency.injection;
 
-import com.xiaobei.spring.demo.dependency.domain.QualifierDomain;
+import com.xiaobei.spring.demo.dependency.config.LazyAnnotationConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.ObjectProvider;

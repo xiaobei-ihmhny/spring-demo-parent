@@ -9,7 +9,7 @@
         <property name="resourceLocation" value="classpath:META-INF/basic-type.properties"/>
         <property name="basicType" value="true"/>
         <property name="byteType" value="126"/>
-        <property name="clazz" value="com.xiaobei.spring.demo.dependency.injection.AwareConfig"/>
+        <property name="clazz" value="com.xiaobei.spring.demo.dependency.config.AwareConfig"/>
     </bean>
 
 </beans>

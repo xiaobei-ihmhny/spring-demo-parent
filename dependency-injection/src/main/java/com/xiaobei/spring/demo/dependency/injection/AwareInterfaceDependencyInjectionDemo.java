@@ -1,5 +1,6 @@
 package com.xiaobei.spring.demo.dependency.injection;
 
+import com.xiaobei.spring.demo.dependency.config.AwareConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.Aware;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;

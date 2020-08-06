@@ -1,5 +1,6 @@
 package com.xiaobei.spring.demo.dependency.injection;
 
+import com.xiaobei.spring.demo.dependency.config.UserHolderConstructorConfig;
 import com.xiaobei.spring.demo.dependency.domain.SuperUser;
 import com.xiaobei.spring.demo.dependency.domain.User;
 import com.xiaobei.spring.demo.dependency.domain.UserHolder;

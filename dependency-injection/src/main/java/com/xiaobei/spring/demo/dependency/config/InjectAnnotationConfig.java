@@ -1,4 +1,4 @@
-package com.xiaobei.spring.demo.dependency.injection;
+package com.xiaobei.spring.demo.dependency.config;
 
 import com.xiaobei.spring.demo.dependency.domain.QualifierDomain;
 import org.springframework.beans.factory.ObjectFactory;

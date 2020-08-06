@@ -1,7 +1,7 @@
 package com.xiaobei.spring.demo.dependency.injection;
 
 import com.xiaobei.spring.demo.dependency.annonation.QualifierDomainGroup;
-import com.xiaobei.spring.demo.dependency.domain.QualifierDomain;
+import com.xiaobei.spring.demo.dependency.config.QualifierDomainConfig;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

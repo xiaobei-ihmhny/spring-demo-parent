@@ -1,4 +1,4 @@
-package com.xiaobei.spring.demo.dependency.injection;
+package com.xiaobei.spring.demo.dependency.config;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanClassLoaderAware;
