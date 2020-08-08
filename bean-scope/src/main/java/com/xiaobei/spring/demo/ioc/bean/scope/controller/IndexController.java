@@ -4,6 +4,7 @@ import com.xiaobei.spring.demo.ioc.bean.scope.domain.ScopeDomain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.WebApplicationContext;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class IndexController {
 
     @Autowired
-    private ScopeDomain scopeDomain;
+    private ScopeDomain requestScopeDomain;
+
+    @Autowired
+    private ScopeDomain sessionScopeDomain;
 
     /**
      * 每次请求都会重新生成一个bean
@@ -26,8 +30,27 @@ public class IndexController {
      * 当前bean [scopedTarget.scopeDomain] 正在进行销毁...
      * @return
      */
-    @GetMapping("/index")
-    public String index() {
-        return scopeDomain.toString();
+    @GetMapping("/request")
+    public String requestScopeDomain() {
+        return requestScopeDomain.toString();
+    }
+
+
+    /**
+     * 运行结果表明：
+     * {@link WebApplicationContext#SCOPE_SESSION}作用域的bean，每一个cookie时会对应一个bean
+     *
+     * 运行结果：
+     *
+     * ScopeDomain{id=1596927941140, name='xiaobei', beanName='scopedTarget.sessionScopeDomain'}
+     *
+     * 日志信息：
+     *
+     * 当前bean [scopedTarget.sessionScopeDomain] 正在进行初始化...
+     * @return
+     */
+    @GetMapping("/session")
+    public String sessionScopeDomain() {
+        return sessionScopeDomain.toString();
     }
 }
