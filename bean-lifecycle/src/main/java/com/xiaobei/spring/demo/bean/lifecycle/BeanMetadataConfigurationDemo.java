@@ -10,6 +10,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.PropertiesBeanDefinitionReader;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -114,6 +115,7 @@ public class BeanMetadataConfigurationDemo {
 
     /**
      * 面向注解配置元信息
+     * @see AnnotatedBeanDefinitionReader
      *
      * 运行结果：
      *
@@ -122,15 +124,18 @@ public class BeanMetadataConfigurationDemo {
      */
     @Test
     public void annotationOriented() {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        applicationContext.register(LifeCycleDomainMetadataConfig.class);
-        applicationContext.refresh();
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        AnnotatedBeanDefinitionReader reader  = new AnnotatedBeanDefinitionReader(beanFactory);
+        // 注解指定的类型的bean
+        reader.registerBean(LifeCycleDomain.class, () -> new LifeCycleDomain()
+                .setId(3L)
+                .setName("面向注解")
+                .setCity(City.BIEJING));
         // 依赖查找
-        String[] names = applicationContext.getBeanDefinitionNames();
+        String[] names = beanFactory.getBeanDefinitionNames();
         System.out.println("当前找到的bean的名称为：" + Arrays.toString(names));
-        ObjectProvider<LifeCycleDomain> lifeCycleDomain = applicationContext.getBeanProvider(LifeCycleDomain.class);
+        ObjectProvider<LifeCycleDomain> lifeCycleDomain = beanFactory.getBeanProvider(LifeCycleDomain.class);
         System.out.println(lifeCycleDomain.getIfAvailable());
-        applicationContext.close();
     }
 
     /**
