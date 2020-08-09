@@ -4,6 +4,7 @@ import com.xiaobei.spring.demo.ioc.bean.scope.domain.ScopeDomain;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.context.annotation.ApplicationScope;
 import org.springframework.web.context.annotation.RequestScope;
 import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -22,7 +23,7 @@ public class SpringWebMvcConfiguration {
     public ScopeDomain requestScopeDomain() {
         return new ScopeDomain()
                 .setId(System.currentTimeMillis())
-                .setName("xiaobei");
+                .setName("request");
     }
 
     @Bean
@@ -30,6 +31,14 @@ public class SpringWebMvcConfiguration {
     public ScopeDomain sessionScopeDomain() {
         return new ScopeDomain()
                 .setId(System.currentTimeMillis())
-                .setName("xiaobei");
+                .setName("session");
+    }
+
+    @Bean
+    @ApplicationScope
+    public ScopeDomain applicationScopeDomain() {
+        return new ScopeDomain()
+                .setId(System.currentTimeMillis())
+                .setName("application");
     }
 }

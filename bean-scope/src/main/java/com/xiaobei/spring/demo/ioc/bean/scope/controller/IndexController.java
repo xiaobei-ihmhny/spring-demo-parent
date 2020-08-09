@@ -19,6 +19,9 @@ public class IndexController {
     @Autowired
     private ScopeDomain sessionScopeDomain;
 
+    @Autowired
+    private ScopeDomain applicationScopeDomain;
+
     /**
      * 每次请求都会重新生成一个bean
      *
@@ -52,5 +55,21 @@ public class IndexController {
     @GetMapping("/session")
     public String sessionScopeDomain() {
         return sessionScopeDomain.toString();
+    }
+
+    /**
+     *
+     * 无论多少个终端访问，结果都是一样的
+     *
+     * 运行结果：
+     * 当前bean [scopedTarget.applicationScopeDomain] 正在进行初始化...
+     *
+     * 日志信息：
+     * ScopeDomain{id=1596933712223, name='application', beanName='scopedTarget.applicationScopeDomain'}
+     * @return
+     */
+    @GetMapping("/application")
+    public String applicationScopeDomain() {
+        return applicationScopeDomain.toString();
     }
 }
