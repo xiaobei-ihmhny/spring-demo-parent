@@ -1,6 +1,8 @@
 package com.xiaobei.spring.demo.ioc.bean.scope;
 
 import com.xiaobei.spring.demo.ioc.bean.scope.config.BeanScopeDemoConfig;
+import com.xiaobei.spring.demo.ioc.bean.scope.config.CustomBeanScopeDomainConfig;
+import com.xiaobei.spring.demo.ioc.bean.scope.config.ThreadLocalScope;
 import com.xiaobei.spring.demo.ioc.bean.scope.domain.ScopeDomain;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.Map;
+import java.util.concurrent.*;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
@@ -24,9 +27,9 @@ public class BeanScopeDemo {
      * {@link ConfigurableBeanFactory#SCOPE_SINGLETON}类型的bean，依赖查找时，得到的都是同一个类型的bean
      * {@link ConfigurableBeanFactory#SCOPE_PROTOTYPE}类型的bean，依赖查找时，得到的都是新生成对象，
      * 且这种类型的Bean没有完整的生命周期（只有bean的初始化回调，没有bean的销毁回调）
-     *
+     * <p>
      * 运行结果：
-     *
+     * <p>
      * 当前bean [singletonDomain] 正在进行初始化...
      * 当前bean [prototypeDomain] 正在进行初始化...
      * 当前bean [prototypeDomain] 正在进行初始化...
@@ -61,9 +64,9 @@ public class BeanScopeDemo {
      * 且这种类型的Bean没有完整的生命周期（只有bean的初始化回调，没有bean的销毁回调），
      * 如果依赖注入集合对象，Singleton Bean 和 Prototype Bean均会存在一个，
      * 且集合中的Prototype Bean 有别于其他地方的依赖注入
-     *
+     * <p>
      * 运行结果：
-     *
+     * <p>
      * 当前bean [singletonDomain] 正在进行初始化...
      * 当前bean [prototypeDomain] 正在进行初始化...
      * 当前bean [prototypeDomain] 正在进行初始化...
@@ -93,7 +96,6 @@ public class BeanScopeDemo {
     }
 
     /**
-     *
      * 若为java注解的方式，可以通过实现配置类的销毁方法，
      * 在其销毁方法中手动调用对应prototype类型的bean的销毁方法；
      * 若注入的是集合类型，比如{@link Map <String, Object>}，
@@ -102,9 +104,9 @@ public class BeanScopeDemo {
      * {@link ConfigurableListableBeanFactory#getBeanDefinition(java.lang.String)}方法
      * 获{@link BeanDefinition}并通过判断{@link BeanDefinition#isPrototype()}来筛选类型为：
      * {@link ConfigurableBeanFactory#SCOPE_PROTOTYPE}的bean后，再调用其销毁方法。
-     *
+     * <p>
      * 运行结果：
-     *
+     * <p>
      * 当前bean [singletonDomain] 正在进行初始化...
      * 当前bean [prototypeDomain] 正在进行初始化...
      * 当前bean [prototypeDomain] 正在进行初始化...
@@ -123,4 +125,50 @@ public class BeanScopeDemo {
         applicationContext.refresh();
         applicationContext.close();
     }
+
+    /**
+     * 从运行结果可以看出，同一个线程会有一个单独的对象副本，实现{@link ThreadLocalScope}的效果
+     *
+     * 运行结果：
+     *
+     * 当前bean [customScopeDomain] 正在进行初始化...
+     * 当前bean [customScopeDomain] 正在进行初始化...
+     * ScopeDomain{Thread.getId=13, id=1596939519063, name='', beanName='customScopeDomain'}
+     * 当前bean [customScopeDomain] 正在进行初始化...
+     * ScopeDomain{Thread.getId=13, id=1596939519063, name='', beanName='customScopeDomain'}
+     * ScopeDomain{Thread.getId=14, id=1596939519092, name='', beanName='customScopeDomain'}
+     * ScopeDomain{Thread.getId=12, id=1596939519068, name='', beanName='customScopeDomain'}
+     * @throws InterruptedException
+     */
+    @Test
+    public void customScopeDemo() throws InterruptedException {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(CustomBeanScopeDomainConfig.class);
+        applicationContext.addBeanFactoryPostProcessor(beanFactory -> {
+            beanFactory.registerScope(ThreadLocalScope.SCOPE_NAME, new ThreadLocalScope());
+        });
+        applicationContext.refresh();
+        int currentCount = 4;
+        CountDownLatch latch = new CountDownLatch(currentCount);
+        ExecutorService pool = getPool();
+        for (int i = 0; i < currentCount; i++) {
+            pool.submit(() -> {
+                ScopeDomain scopeDomain = applicationContext.getBean("customScopeDomain", ScopeDomain.class);
+                System.out.println(scopeDomain);
+                latch.countDown();
+            });
+        }
+        latch.await();
+        pool.shutdown();
+        applicationContext.close();
+    }
+
+    private ThreadPoolExecutor getPool() {
+        return new ThreadPoolExecutor(
+                3,
+                5,
+                10L,
+                TimeUnit.SECONDS, new LinkedBlockingDeque<>());
+    }
+
 }

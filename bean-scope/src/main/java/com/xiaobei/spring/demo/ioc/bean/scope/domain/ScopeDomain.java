@@ -42,7 +42,8 @@ public class ScopeDomain implements BeanNameAware {
     @Override
     public String toString() {
         return "ScopeDomain{" +
-                "id=" + id +
+                "Thread.getId=" + Thread.currentThread().getId() +
+                ", id=" + id +
                 ", name='" + name + '\'' +
                 ", beanName='" + beanName + '\'' +
                 '}';
