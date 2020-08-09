@@ -5,12 +5,10 @@ import com.xiaobei.spring.demo.bean.lifecycle.domain.City;
 import com.xiaobei.spring.demo.bean.lifecycle.domain.LifeCycleDomain;
 import org.junit.Test;
 import org.springframework.beans.factory.ObjectProvider;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.support.PropertiesBeanDefinitionReader;
+import org.springframework.beans.factory.support.*;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
+import org.springframework.context.annotation.AnnotationBeanNameGenerator;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -115,7 +113,10 @@ public class BeanMetadataConfigurationDemo {
 
     /**
      * 面向注解配置元信息
+     * bean的名称生成来自于 {@link BeanNameGenerator}，注解实现为 {@link AnnotationBeanNameGenerator}
      * @see AnnotatedBeanDefinitionReader
+     * @see BeanNameGenerator
+     * @see AnnotationBeanNameGenerator
      *
      * 运行结果：
      *
