@@ -89,6 +89,7 @@ public class BeanMetadataConfigurationDemo {
     }
 
     /**
+     * TODO xml文件中可以指定相关的编码，故在加载时不需要再额外指定！！！
      * 通过XML的方式配置元信息（指定编码）
      *
      * 运行结果：
