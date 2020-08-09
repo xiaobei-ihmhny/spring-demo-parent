@@ -11,4 +11,10 @@
         <property name="city" value="BIEJING"/>
     </bean>
 
+    <!-- 指定其父类 -->
+    <bean id="superLifeCycle" class="com.xiaobei.spring.demo.bean.lifecycle.domain.SuperLifeCycleDomain"
+          parent="lifeCycleDomain">
+        <property name="child" value="子类"/>
+    </bean>
+
 </beans>
