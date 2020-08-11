@@ -8,6 +8,8 @@ public class SuperLifeCycleDomain extends LifeCycleDomain {
 
     private String child;
 
+    private Long number;
+
     public String getChild() {
         return child;
     }
@@ -17,10 +19,20 @@ public class SuperLifeCycleDomain extends LifeCycleDomain {
         return this;
     }
 
+    public Long getNumber() {
+        return number;
+    }
+
+    public SuperLifeCycleDomain setNumber(Long number) {
+        this.number = number;
+        return this;
+    }
+
     @Override
     public String toString() {
         return "SuperLifeCycleDomain{" +
                 "child='" + child + '\'' +
+                ", number=" + number +
                 "} " + super.toString();
     }
 }
