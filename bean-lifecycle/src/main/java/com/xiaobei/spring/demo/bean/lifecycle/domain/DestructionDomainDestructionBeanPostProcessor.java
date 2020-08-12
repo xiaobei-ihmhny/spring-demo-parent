@@ -19,7 +19,7 @@ public class DestructionDomainDestructionBeanPostProcessor implements Destructio
     @Override
     public void postProcessBeforeDestruction(Object bean, String beanName) throws BeansException {
         // 拦截 id="lifeCycleDomain" 的 bean，并做一定的修改
-        if(ObjectUtils.nullSafeEquals("beforeDestructionDomain", beanName)
+        if(ObjectUtils.nullSafeEquals("destructionDomain", beanName)
                 && DestructionDomain.class.equals(bean.getClass())) {
             System.out.println("开始执行 lifeCycleDomain在销毁前的回调...");
             // 修改相应bean中的信息

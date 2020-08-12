@@ -5,7 +5,7 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- 销毁前的配置 -->
-    <bean id="beforeDestructionDomain" class="com.xiaobei.spring.demo.bean.lifecycle.domain.DestructionDomain">
+    <bean id="destructionDomain" class="com.xiaobei.spring.demo.bean.lifecycle.domain.DestructionDomain" destroy-method="initDestroy">
         <property name="id" value="1"/>
         <property name="name" value="销毁前的配置"/>
     </bean>
