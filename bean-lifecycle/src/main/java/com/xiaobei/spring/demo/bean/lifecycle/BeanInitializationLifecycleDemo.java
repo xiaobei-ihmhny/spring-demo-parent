@@ -11,6 +11,7 @@ import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.CommonAnnotationBeanPostProcessor;
 import org.springframework.util.ObjectUtils;
 
@@ -105,5 +106,56 @@ public class BeanInitializationLifecycleDemo {
         // 依赖查找
         LifeCycleDomain lifeCycleDomain = beanFactory.getBean("lifeCycleDomain", LifeCycleDomain.class);
         System.out.println("最终获得的 lifeCycleDomain为：" + lifeCycleDomain);
+    }
+
+    /**
+     *
+     * 运行结果：
+     * .....
+     * lifeCycleDomain：LifeCycleDomain{id=100, name='xiaobei_ihmhny', city=BIEJING}
+     * .....
+     *
+     * {@link AbstractAutowireCapableBeanFactory#initializeBean(java.lang.String, java.lang.Object, RootBeanDefinition)}
+     * 中的{@code wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);}对所有的after方法回调
+     *
+     * {@link AbstractAutowireCapableBeanFactory#initializeBean(java.lang.String, java.lang.Object, RootBeanDefinition)}方法中，
+     *
+     * 总结：
+     * 一共做了4件事件，按顺序依次是：
+     * 1. Aware接口回调阶段 {@code invokeAwareMethods(beanName, bean);}
+     * 2. 初始化前阶段 {@code wrappedBean = applyBeanPostProcessorsBeforeInitialization(wrappedBean, beanName);}，
+     *   包括与 {@link ApplicationContext}相关的aware回调及{@link PostConstruct}的回调
+     * 3. 初始化阶段 {@code invokeInitMethods(beanName, wrappedBean, mbd);}
+     * 4. 初始化后阶段 {@code wrappedBean = applyBeanPostProcessorsAfterInitialization(wrappedBean, beanName);}
+     *
+     * @see AbstractAutowireCapableBeanFactory#initializeBean(java.lang.String, java.lang.Object, RootBeanDefinition)
+     */
+    @Test
+    public void postProcessAfterInitialization() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        String location = "META-INF/life-cycle-domain.xml";
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(location);
+        // 查找之前添加BeanPostProcessor处理
+        beanFactory.addBeanPostProcessor(new BeanPostProcessor() {
+            @Override
+            public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
+                // 拦截 id="lifeCycleDomain" 的 bean，并做一定的修改
+                if(ObjectUtils.nullSafeEquals("lifeCycleDomain", beanName)
+                        && LifeCycleDomain.class.equals(bean.getClass())) {
+                    // 修改相应bean中的信息
+                    LifeCycleDomain domain = (LifeCycleDomain) bean;
+                    // 将bean中的id属性设置为98L
+                    domain.setId(100L);
+                    return domain;
+                }
+                return null;
+            }
+        });
+        // 依赖查找
+        LifeCycleDomain lifeCycleDomain = beanFactory.getBean("lifeCycleDomain", LifeCycleDomain.class);
+        System.out.println("lifeCycleDomain：" + lifeCycleDomain);
+        LifeCycleDomain superLifeCycle = beanFactory.getBean("superLifeCycle", LifeCycleDomain.class);
+        System.out.println("superLifeCycle：" + superLifeCycle);
     }
 }
