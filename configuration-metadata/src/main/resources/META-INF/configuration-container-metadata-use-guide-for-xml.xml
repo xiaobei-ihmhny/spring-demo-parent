@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        https://www.springframework.org/schema/beans/spring-context.xsd"
+
+       profile="" default-lazy-init="true" default-merge="true" default-autowire="byType"
+       default-autowire-candidates="" default-init-method="" default-destroy-method=""
+>
+    <!--
+        Spring Beans 及 Spring Context相关的说明
+        @see org.springframework.beans.factory.xml.BeanDefinitionParserDelegate
+        @see BeanDefinitionParserDelegate#populateDefaults(DocumentDefaultsDefinition, DocumentDefaultsDefinition, Element)
+    -->
+
+
+    <!--
+        一、profile
+
+        1. 指定当前的环境信息，可配置多个，中间使用" "、","、";"分隔
+        2. 处于活动状态的<bean/>、<import>等元素才会被处理
+        3. 可以使用 "!" 来表示不在某个环境，比如 profile="p1,!p2"，
+          表示当环境为p1时，或环境不为p2时，激活当前配置
+        4. 激活配置的方式有两类：：
+          spring.profiles.active=p1,p2
+          spring.profiles.default=p1,p2
+
+        二、default-lazy-init
+
+        默认的“ lazy-init”值； 请参阅“ bean”元素的“ lazy-init”属性的文档。
+        默认值为“ default”，表示在嵌套的情况下从外部“ beans”部分继承，否则返回“ false”。
+
+        三、default-merge
+
+        默认的“合并”值； 请参阅文档，了解各种集合元素的“合并”属性。
+        默认值为“ default”，表示在嵌套的情况下从外部“ beans”部分继承，否则返回“ false”。
+
+        四、default-autowire
+
+        默认的“自动装配”值； 请参阅“ bean”元素的“ autowire”属性的文档。
+        默认值为“默认”，表示在嵌套的情况下从外部“ beans”部分继承，否则返回“否”（即无外部驱动的自动装配）。
+
+        五、default-autowire-candidates
+
+        用于识别自动装配候选的默认Bean名称模式： "*Service", "data*", "*Service*", "data*Service".。
+        还接受以逗号分隔的模式列表：例如 "*Service,*Dao".。 有关自动装配候选bean的语义详细信息，
+        请参见'bean'元素的'autowire-candidate'属性的文档。
+
+        六、default-init-method
+
+        默认的"init-method"值； 请参阅“ bean”元素的“ init-method”属性的文档。
+
+        七、default-destroy-method
+
+        默认的"destroy-method"值； 请参阅文档“ bean”元素的“ destroy-method”属性。
+
+
+    -->
+
+    <!-- 激活 Spring注解驱动 -->
+    <!--
+        激活要在bean类中检测到的各种注释：
+        Spring的@Required和@Autowired，以及JSR 250的@ PostConstruct，
+        @ PreDestroy和@Resource（如果可用），JAX-WS的@WebServiceRef（如果可用），
+        EJB 3的@EJB（ （如果有），以及JPA的@PersistenceContext和@PersistenceUnit（如果有）。
+        或者，您可以选择为这些注释激活各个BeanPostProcessor。
+
+        注意：此标记不会激活对Spring的@Transactional或EJB 3的@TransactionAttribute批注的处理。
+        考虑为此目的使用<tx：annotation-driven>标记。
+
+        有关自举注释驱动的支持的基于代码的替代方法的信息，
+        请参见org.springframework.context.annotation.AnnotationConfigApplicationContext的javadoc。
+    -->
+    <context:annotation-config/>
+
+    <!-- 激活 Spring @Component以及自定义注解扫描 -->
+    <!--
+        扫描类路径以查找将被自动注册为Spring Bean的带注释的组件。默认情况下，
+        将检测到Spring提供的@ Component，@ Repository，@ Service，@ Controller，
+        @ RestController，@ ControllerAdvice和@Configuration构造型。
+
+        注意：此标记暗含“ annotation-config”标记的作用，在组件类中激活@ Required，
+        @ Autowired，@ PostConstruct，@ PreDestroy，@ Resource，
+        @ PersistenceContext和@PersistenceUnit批注，这对于自动检测到的组件通常是必需的（无外部配置）。
+        关闭“ annotation-config”属性以停用此默认行为，例如，为了使用自定义BeanPostProcessor定义来处理这些注释。
+
+        注意：您可以在包路径中使用占位符，但只能根据系统属性（类似于资源路径）进行解析。
+        组件扫描导致新的bean定义被注册； Spring的PropertySourcesPlaceholderConfigurer像常规的Bean定义一样，
+        将应用于那些Bean定义，但不适用于组件扫描设置本身。
+
+        有关引导组件扫描的基于代码的替代方法的信息，
+        请参阅org.springframework.context.annotation.ComponentScan的javadoc。
+    -->
+    <context:component-scan base-package="com" />
+
+
+    <!-- 激活 Spring LoadTimeWeaver -->
+    <!--
+        为此应用程序上下文激活一个Spring LoadTimeWeaver，它可以作为一个名为“ loadTimeWeaver”的Bean使用。
+        任何实现LoadTimeWeaverAware接口的bean都将自动接收LoadTimeWeaver参考。例如，Spring的JPA引导支持。
+
+        默认的编织器是自动确定的：有关详细信息，请参见DefaultContextLoadTimeWeaver的javadoc。
+
+        AspectJ加载时编织的激活是通过一个简单的标志（“ aspectj-weaving”属性）指定的，
+        AspectJ类转换器通过Spring的LoadTimeWeaver注册。如果类路径中存在“ META-INF / aop.xml”资源，
+        则默认情况下将激活AspectJ编织。
+
+        这还将激活当前应用程序上下文，以将依赖项注入应用于在Spring外部实例化的非托管类。
+        bean工厂（通常使用@Configurable注释注释的类）。
+        仅当AnnotationBeanConfigurerAspect位于类路径（即spring-aspects.jar）上，
+        并且默认情况下有效激活“ spring-configured”时，才会发生这种情况。
+
+        有关引导加载时织造支持的基于代码的替代方法的信息，
+        请参见org.springframework.context.annotation.EnableLoadTimeWeaving的javadoc。
+    -->
+    <context:load-time-weaver/>
+
+
+    <!-- 暴露 Spring Beans作为 JMX Beans -->
+    <!--
+        通过在Spring上下文中检测标准MBean以及在Spring定义的bean上的@ManagedResource注解，激活MBean的默认导出。
+        生成的MBeanExporter bean是在名称“ mbeanExporter”下定义的。
+        或者，考虑显式定义自定义AnnotationMBeanExporter bean。
+    -->
+    <context:mbean-export/>
+
+
+    <!-- 将当前平台作为 MBeanServer -->
+    <!--
+        公开当前平台为默认MBeanServer。
+        自动检测WebLogic，WebSphere和JVM的平台MBeanServer。
+
+        公开的MBeanServer的默认bean名称是“ mbeanServer”。
+        这可以通过指定“id”属性来定制。
+    -->
+    <context:mbean-server/>
+
+    <!-- 加载外部化配置资源作为 Spring 属性配置 -->
+    <!--
+        通过在应用程序上下文中注册PropertySourcesPlaceholderConfigurer来激活$ {...}占位符的替换。
+        属性将针对指定的属性文件或Properties对象-所谓的“本地属性”（如果有）
+        以及Spring Environment当前的PropertySources集进行解析。
+
+        请注意，从Spring 3.1开始，为了更灵活的PropertySources机制，已删除了system-properties-mode属性。
+        但是，应用程序可能会继续使用spring-context模式的3.0（或更早版本）版本，以保留系统属性模式的行为。
+        在这种情况下，将注册传统的PropertyPlaceholderConfigurer组件，
+        而不是较新的PropertySourcesPlaceholderConfigurer。
+
+        有关用法的更多信息，请参见ConfigurableEnvironment javadoc。
+     -->
+    <context:property-placeholder/>
+
+    <!-- 利用外部化配置资源覆盖 Spring 属性值 -->
+    <!-- 根据以下格式的配置行，激活将覆盖值推入bean属性中：beanName.property = value -->
+    <context:property-override/>
+
+    <!--
+        向当前应用程序上下文发出信号，以将依赖项注入应用于在Spring bean工厂之外实例化的非托管类
+        （通常使用@Configurable注释进行注释的类）
+    -->
+    <context:spring-configured/>
+
+</beans>
