@@ -103,4 +103,16 @@ public class ResourceDomain {
         this.clazz = clazz;
     }
 
+    @Override
+    public String toString() {
+        return "ResourceDomain{" +
+                "byteType=" + byteType +
+                ", basicType=" + basicType +
+                ", name='" + name + '\'' +
+                ", id=" + id +
+                ", enumType=" + enumType +
+                ", resourceLocation=" + resourceLocation +
+                ", clazz=" + clazz +
+                '}';
+    }
 }
