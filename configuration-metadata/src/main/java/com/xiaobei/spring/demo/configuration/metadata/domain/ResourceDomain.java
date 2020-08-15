@@ -30,6 +30,8 @@ public class ResourceDomain {
      */
     private String name;
 
+    private String nickname;
+
     /**
      * 标量类型——Long
      */
@@ -71,6 +73,15 @@ public class ResourceDomain {
         this.name = name;
     }
 
+    public String getNickname() {
+        return nickname;
+    }
+
+    public ResourceDomain setNickname(String nickname) {
+        this.nickname = nickname;
+        return this;
+    }
+
     public Long getId() {
         return id;
     }
@@ -109,6 +120,7 @@ public class ResourceDomain {
                 "byteType=" + byteType +
                 ", basicType=" + basicType +
                 ", name='" + name + '\'' +
+                ", nickname='" + nickname + '\'' +
                 ", id=" + id +
                 ", enumType=" + enumType +
                 ", resourceLocation=" + resourceLocation +
