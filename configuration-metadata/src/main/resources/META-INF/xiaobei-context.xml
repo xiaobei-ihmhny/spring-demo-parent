@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xiaobei="http://www.xiaobei.com/schema/xiaobei"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.xiaobei.com/schema/xiaobei
+        http://www.xiaobei.com/schema/xiaobei.xsd">
+
+    <!-- 使用自定义扩展来定义 bean -->
+    <xiaobei:resourceDomain id="118" name="小贝" enumType="RUYANG"/>
+    <!-- xml的方式配置元信息 -->
+    <!--<bean id="resourceDomain" class="com.xiaobei.spring.demo.configuration.metadata.domain.ResourceDomain">
+        <property name="id" value="111"/>
+        <property name="name" value="基于Properties资源装载Spring Bean配置元信息-PropertiesBeanDefinition"/>
+        <property name="basicType" value="true"/>
+        <property name="byteType" value="1"/>
+        <property name="clazz" value="com.xiaobei.spring.demo.configuration.metadata.domain.ResourceDomain"/>
+        <property name="enumType" value="RUYANG"/>
+        <property name="resourceLocation" value="classpath:/META-INF/configuration-for-xml.xml"/>
+    </bean>-->
+
+</beans>

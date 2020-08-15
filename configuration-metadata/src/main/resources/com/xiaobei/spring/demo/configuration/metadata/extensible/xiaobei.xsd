@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+
+<xsd:schema xmlns="http://www.xiaobei.com/schema/xiaobei"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.xiaobei.com/schema/xiaobei">
+
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+
+    <!-- 定义 ResourceDomain类型（复杂类型） -->
+    <xsd:complexType name="ResourceDomain">
+        <xsd:attribute name="x-id" type="xsd:string"/>
+        <xsd:attribute name="id" type="xsd:long" use="required"/>
+        <xsd:attribute name="name" type="xsd:string" use="required"/>
+        <xsd:attribute name="enumType" type="EnumType"/>
+    </xsd:complexType>
+
+    <!-- 定义 EnumType 类型（简单类型） -->
+    <xsd:simpleType name="EnumType">
+        <xsd:restriction base="xsd:string">
+            <xsd:enumeration value="BEIJING"/>
+            <xsd:enumeration value="LUOYANG"/>
+            <xsd:enumeration value="RUYANG"/>
+        </xsd:restriction>
+    </xsd:simpleType>
+
+    <!-- 定义 resourceDomain 元素 -->
+    <xsd:element name="resourceDomain" type="ResourceDomain"/>
+</xsd:schema>
