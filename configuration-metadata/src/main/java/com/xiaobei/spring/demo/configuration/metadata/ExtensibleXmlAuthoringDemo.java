@@ -1,6 +1,8 @@
 package com.xiaobei.spring.demo.configuration.metadata;
 
 import com.xiaobei.spring.demo.configuration.metadata.domain.ResourceDomain;
+import com.xiaobei.spring.demo.configuration.metadata.extensible.UserBeanDefinitionParser;
+import com.xiaobei.spring.demo.configuration.metadata.extensible.XiaobeiNamespaceHandler;
 import org.junit.Test;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
@@ -21,6 +23,9 @@ public class ExtensibleXmlAuthoringDemo {
      * 2. 自定义 NamespaceHander 实现：命名空间绑定
      * 3. 自定义 BeanDefinitionParser 实现：XML元素与BeanDefinition解析
      * 4. 注册 XML 扩展：命名空间与 XML Schema 映射
+     *
+     * @see UserBeanDefinitionParser
+     * @see XiaobeiNamespaceHandler
      */
     @Test
     public void extensibleXmlAuthoring() {
