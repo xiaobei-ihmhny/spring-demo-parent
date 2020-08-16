@@ -19,6 +19,7 @@
         <inject.version>1</inject.version>
         <servlet-api.version>3.0.1</servlet-api.version>
         <snakeyaml.version>1.26</snakeyaml.version>
+        <commons-io.version>2.6</commons-io.version>
     </properties>
 
     <modules>
@@ -32,6 +33,7 @@
         <module>bean-scope</module>
         <module>bean-lifecycle</module>
         <module>configuration-metadata</module>
+        <module>resource</module>
     </modules>
 
     <dependencyManagement>
@@ -104,6 +106,11 @@
                 <groupId>org.yaml</groupId>
                 <artifactId>snakeyaml</artifactId>
                 <version>${snakeyaml.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
