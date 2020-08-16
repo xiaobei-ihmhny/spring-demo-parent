@@ -1,4 +1,4 @@
-package com.xiaobei.spring.demo.resouce;
+package com.xiaobei.spring.demo.resource;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.core.io.DefaultResourceLoader;
@@ -39,7 +39,7 @@ public class EncodedFileSystemResourceLoaderDemo {
      */
     public static void main(String[] args) throws IOException {
         String separator = File.separator;
-        String filePath = System.getProperties().get("user.dir") + "/resource/src/main/java/com/xiaobei/spring/demo/resouce/EncodedFileSystemResourceDemo.java";
+        String filePath = System.getProperties().get("user.dir") + "/resource/src/main/java/com/xiaobei/spring/demo/resource/EncodedFileSystemResourceDemo.java";
         if("\\".equals(separator)) {
             filePath = filePath.replace("/", separator);
         }
@@ -50,7 +50,8 @@ public class EncodedFileSystemResourceLoaderDemo {
         Resource resource = loader.getResource(filePath);
         EncodedResource encodedResource = new EncodedResource(resource, StandardCharsets.UTF_8);
         // 获取字符输入流
-        Reader reader = encodedResource.getReader();
-        System.out.println(IOUtils.toString(reader));
+        try(Reader reader = encodedResource.getReader()){
+            System.out.println(IOUtils.toString(reader));
+        }
     }
 }
