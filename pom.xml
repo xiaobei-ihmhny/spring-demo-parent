@@ -20,6 +20,8 @@
         <servlet-api.version>3.0.1</servlet-api.version>
         <snakeyaml.version>1.26</snakeyaml.version>
         <commons-io.version>2.6</commons-io.version>
+        <spring-boot-dependencies.version>2.2.2.RELEASE</spring-boot-dependencies.version>
+
     </properties>
 
     <modules>
@@ -112,6 +114,14 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
+            </dependency>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot-dependencies.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
