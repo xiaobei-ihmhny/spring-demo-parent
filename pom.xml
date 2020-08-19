@@ -21,7 +21,7 @@
         <snakeyaml.version>1.26</snakeyaml.version>
         <commons-io.version>2.6</commons-io.version>
         <spring-boot-dependencies.version>2.2.2.RELEASE</spring-boot-dependencies.version>
-
+        <javax.el-api.version>3.0.0</javax.el-api.version>
     </properties>
 
     <modules>
@@ -123,6 +123,11 @@
                 <version>${spring-boot-dependencies.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el-api.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
