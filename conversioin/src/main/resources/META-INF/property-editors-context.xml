@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 将 DatePropertyEditorRegistrar 类 注册为 Spring Bean -->
+<!--    <bean class="com.xiaobei.spring.demo.conversion.DatePropertyEditorRegistrar"/>-->
+
+    <!-- TODO 如何在map中配置value为复杂类型的bean??? -->
+    <bean id="customer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="customEditors">
+            <map>
+                <entry key="java.util.Date" value="com.xiaobei.spring.demo.conversion.DatePropertyEditor"/>
+            </map>
+        </property>
+    </bean>
+
+<!--    <bean id="datePropertyEditor" class="com.xiaobei.spring.demo.conversion.DatePropertyEditor">-->
+<!--        <constructor-arg value="yyyy-MM-dd HH:mm:ss"/>-->
+<!--    </bean>-->
+
+    <bean id="propertyDomain" class="com.xiaobei.spring.demo.conversion.domain.PropertyEditorDomain">
+        <property name="id" value="163"/>
+        <property name="name" value="自定义PropertyEditor扩展：不尝试怎么知道它好不好用？"/>
+        <property name="startDate" value="2020-08-20 22:37:40"/>
+    </bean>
+
+</beans>
