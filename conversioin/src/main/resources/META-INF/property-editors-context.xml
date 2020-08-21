@@ -9,16 +9,25 @@
 
     <!-- TODO 如何在map中配置value为复杂类型的bean??? -->
     <bean id="customer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
-        <property name="customEditors">
+        <!-- 方式一： -->
+        <!--<property name="customEditors">
             <map>
                 <entry key="java.util.Date" value="com.xiaobei.spring.demo.conversion.DatePropertyEditor"/>
             </map>
+        </property>-->
+        <!-- 方式二： -->
+        <property name="propertyEditorRegistrars">
+            <list>
+                <bean class="com.xiaobei.spring.demo.conversion.DatePropertyEditorRegistrar">
+                    <constructor-arg ref="datePropertyEditor"/>
+                </bean>
+            </list>
         </property>
     </bean>
 
-<!--    <bean id="datePropertyEditor" class="com.xiaobei.spring.demo.conversion.DatePropertyEditor">-->
-<!--        <constructor-arg value="yyyy-MM-dd HH:mm:ss"/>-->
-<!--    </bean>-->
+    <bean id="datePropertyEditor" class="com.xiaobei.spring.demo.conversion.DatePropertyEditor">
+        <constructor-arg value="yyyy-MM-dd HH:mm:ss"/>
+    </bean>
 
     <bean id="propertyDomain" class="com.xiaobei.spring.demo.conversion.domain.PropertyEditorDomain">
         <property name="id" value="163"/>

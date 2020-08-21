@@ -13,11 +13,13 @@ import java.util.Locale;
  */
 public class DatePropertyEditor extends PropertyEditorSupport implements PropertyEditor {
 
-    private final String pattern = "yyyy-MM-dd HH:mm:ss";
+//    private final String pattern = "yyyy-MM-dd HH:mm:ss";
+    private final String pattern;
 
-//    public DatePropertyEditor(String pattern) {
-//        this.pattern = pattern;
-//    }
+
+    public DatePropertyEditor(String pattern) {
+        this.pattern = pattern;
+    }
 
     @Override
     public String getAsText() {
