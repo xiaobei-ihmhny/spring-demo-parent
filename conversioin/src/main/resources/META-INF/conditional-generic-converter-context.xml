@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <!-- 声明 ConversionServiceFactoryBean 并且名称必须为 "conversionService" -->
+    <!-- ConfigurableApplicationContext#CONVERSION_SERVICE_BEAN_NAME -->
+    <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <bean class="com.xiaobei.spring.demo.conversion.PropertiesToStringConverter"/>
+        </property>
+    </bean>
+
+    <bean id="conditionalGenericConverterDomain" class="com.xiaobei.spring.demo.conversion.domain.ConditionalGenericConverterDomain">
+        <property name="id" value="170"/>
+        <property name="name" value="扩展Spring类型转换器"/>
+        <property name="properties" value="id=1,name=xiaobei"/>
+        <property name="propertiesAsText" ref="properties"/>
+    </bean>
+
+    <util:properties id="properties">
+        <prop key="id">170</prop>
+        <prop key="name">Spring类型转换器</prop>
+    </util:properties>
+
+</beans>
