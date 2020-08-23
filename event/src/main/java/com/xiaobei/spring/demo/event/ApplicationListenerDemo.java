@@ -1,8 +1,11 @@
 package com.xiaobei.spring.demo.event;
 
+import com.xiaobei.spring.demo.event.config.ApplicationEventPublisherConfig;
 import com.xiaobei.spring.demo.event.config.ApplicationListenerConfig;
 import com.xiaobei.spring.demo.event.config.MyApplicationListener;
 import org.junit.Test;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.GenericApplicationContext;
@@ -86,6 +89,33 @@ public class ApplicationListenerDemo {
     public void addApplicationListenerByRegisterBean() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.register(MyApplicationListener.class);
+        // 启动 spring 应用上下文
+        applicationContext.refresh();
+        applicationContext.start();
+        applicationContext.stop();
+        // 关闭 spring 应用上下文
+        applicationContext.close();
+    }
+
+    /**
+     * 通过 {@link ApplicationEventPublisherAware} 获取 {@link ApplicationEventPublisher} 并发布事件
+     *
+     * <h2>运行结果：</h2>
+     * 接收到 Spring 事件：com.xiaobei.spring.demo.event.config.ApplicationEventPublisherConfig$1[source=hello, world]
+     * 接收到 Spring 事件：org.springframework.context.PayloadApplicationEvent[source=org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f, started on Sun Aug 23 23:05:27 CST 2020]
+     * 接收到 Spring 事件：org.springframework.context.event.ContextRefreshedEvent[source=org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f, started on Sun Aug 23 23:05:27 CST 2020]
+     * 接收到 Spring 事件：org.springframework.context.event.ContextStartedEvent[source=org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f, started on Sun Aug 23 23:05:27 CST 2020]
+     * 接收到 Spring 事件：org.springframework.context.event.ContextStoppedEvent[source=org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f, started on Sun Aug 23 23:05:27 CST 2020]
+     * 接收到 Spring 事件：org.springframework.context.event.ContextClosedEvent[source=org.springframework.context.annotation.AnnotationConfigApplicationContext@75828a0f, started on Sun Aug 23 23:05:27 CST 2020]
+     *
+     * @see ApplicationEventPublisherAware
+     * @see ApplicationEventPublisher
+     */
+    @Test
+    public void applicationEventPublisherDemo() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.addApplicationListener(event -> System.out.printf("接收到 Spring 事件：%s\n", event));
+        applicationContext.register(ApplicationEventPublisherConfig.class);
         // 启动 spring 应用上下文
         applicationContext.refresh();
         applicationContext.start();
