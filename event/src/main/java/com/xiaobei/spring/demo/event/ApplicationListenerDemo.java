@@ -1,6 +1,7 @@
 package com.xiaobei.spring.demo.event;
 
 import com.xiaobei.spring.demo.event.config.ApplicationListenerConfig;
+import com.xiaobei.spring.demo.event.config.MyApplicationListener;
 import org.junit.Test;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -67,6 +68,24 @@ public class ApplicationListenerDemo {
     public void addApplicationListenerBaseAnnotation() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         applicationContext.register(ApplicationListenerConfig.class);
+        // 启动 spring 应用上下文
+        applicationContext.refresh();
+        applicationContext.start();
+        applicationContext.stop();
+        // 关闭 spring 应用上下文
+        applicationContext.close();
+    }
+
+    /**
+     * 通过注册 Bean的方式来 注册 {@link ApplicationListener}
+     *
+     * <h2>运行结果：</h2>
+     * MyApplicationListener 接收到事件：ContextRefreshedEvent
+     */
+    @Test
+    public void addApplicationListenerByRegisterBean() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(MyApplicationListener.class);
         // 启动 spring 应用上下文
         applicationContext.refresh();
         applicationContext.start();
