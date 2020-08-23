@@ -23,8 +23,8 @@ import java.util.concurrent.atomic.AtomicReference;
 public class SpringArticles {
 
     public static void main(String[] args) throws IOException {
-//        article();
-        orderPriceAll();
+        article();
+//        orderPriceAll();
     }
 
     private static void orderPriceAll() throws IOException {
@@ -56,7 +56,7 @@ public class SpringArticles {
         JSONArray list = data.getJSONArray("list");
         List<JSONObject> lessonList = list.toJavaList(JSONObject.class);
         AtomicInteger countSeconds = new AtomicInteger();
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.of(2020, 7, 28);
         for (JSONObject object : lessonList) {
             String title = object.getString("article_title").replace(" |", "");
             String time = object.getString("video_time");
