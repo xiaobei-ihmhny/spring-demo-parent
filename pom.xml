@@ -41,6 +41,7 @@
         <module>data-binding</module>
         <module>conversioin</module>
         <module>generic</module>
+        <module>event</module>
     </modules>
 
     <dependencyManagement>
