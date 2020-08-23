@@ -1,5 +1,7 @@
 package com.xiaobei.spring.demo.generic;
 
+import com.xiaobei.spring.demo.generic.domain.GenericMap;
+import com.xiaobei.spring.demo.generic.domain.GenericTypeDomain;
 import org.junit.Test;
 import org.springframework.core.GenericTypeResolver;
 

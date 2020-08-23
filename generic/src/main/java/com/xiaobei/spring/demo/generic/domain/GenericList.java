@@ -1,4 +1,4 @@
-package com.xiaobei.spring.demo.generic;
+package com.xiaobei.spring.demo.generic.domain;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
