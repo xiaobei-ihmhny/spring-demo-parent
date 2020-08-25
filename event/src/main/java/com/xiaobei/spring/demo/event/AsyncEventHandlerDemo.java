@@ -1,21 +1,21 @@
 package com.xiaobei.spring.demo.event;
 
 import org.junit.Test;
+import org.springframework.context.ApplicationListener;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.event.ApplicationEventMulticaster;
+import org.springframework.context.event.ContextClosedEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.context.event.SimpleApplicationEventMulticaster;
 import org.springframework.context.support.GenericApplicationContext;
-import org.springframework.core.task.TaskExecutor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.CustomizableThreadFactory;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.function.Consumer;
 
 import static org.springframework.context.support.AbstractApplicationContext.APPLICATION_EVENT_MULTICASTER_BEAN_NAME;
@@ -26,6 +26,15 @@ import static org.springframework.context.support.AbstractApplicationContext.APP
  */
 public class AsyncEventHandlerDemo {
 
+    public static void main(String[] args) {
+//        syncApplicationEvent();
+//        asyncApplicationEventDefaultThreadFactory();
+//        asyncApplicationEventCustomizedThreadFactory();
+//        syncApplicationEventByAnnotation();
+//        asyncApplicationEventByAnnotationDefaultThreadFactory();
+//        asyncApplicationEventByAnnotationCustomizedThreadFactory();
+    }
+
     /**
      * 以同步方式实现
      *
@@ -33,8 +42,9 @@ public class AsyncEventHandlerDemo {
      * [线程 ：main] 监听到事件：com.xiaobei.spring.demo.event.MyApplicationEvent[source=Hello, World]
      */
     @Test
-    public void syncApplicationEvent() {
-        genericApplicationContextConfig(applicationContext -> {});
+    public static void syncApplicationEvent() {
+        genericApplicationContextConfig(applicationContext -> {
+        });
     }
 
     /**
@@ -43,17 +53,32 @@ public class AsyncEventHandlerDemo {
      *
      * <h2>运行结果：</h2>
      * [线程 ：pool-1-thread-1] 监听到事件：com.xiaobei.spring.demo.event.MyApplicationEvent[source=Hello, World]
-     *
      */
     @Test
-    public void asyncApplicationEventDefaultThreadFactory() {
+    public static void asyncApplicationEventDefaultThreadFactory() {
         genericApplicationContextConfig(applicationContext -> {
             // 获取 {@code ApplicationEventMulticaster}
             ApplicationEventMulticaster applicationEventMulticaster =
                     applicationContext.getBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, ApplicationEventMulticaster.class);
-            if(applicationEventMulticaster instanceof SimpleApplicationEventMulticaster) {
+            if (applicationEventMulticaster instanceof SimpleApplicationEventMulticaster) {
                 SimpleApplicationEventMulticaster multicaster = (SimpleApplicationEventMulticaster) applicationEventMulticaster;
-                multicaster.setTaskExecutor(Executors.newSingleThreadExecutor());
+                ExecutorService taskExecutor = Executors.newSingleThreadExecutor();
+                multicaster.setTaskExecutor(taskExecutor);
+                shutDownThePool(applicationEventMulticaster, taskExecutor);
+            }
+        });
+    }
+
+    /**
+     * 关闭线程池
+     * @param applicationEventMulticaster
+     * @param taskExecutor
+     */
+    private static void shutDownThePool(ApplicationEventMulticaster applicationEventMulticaster, ExecutorService taskExecutor) {
+        // 添加对 ContextClosedEvent 事件处理，在应用上下文关闭时关闭线程池
+        applicationEventMulticaster.addApplicationListener((ApplicationListener<ContextClosedEvent>) closedEvent -> {
+            if (!taskExecutor.isShutdown()) {
+                taskExecutor.shutdown();
             }
         });
     }
@@ -66,23 +91,26 @@ public class AsyncEventHandlerDemo {
      * [线程 ：my-event-thread-pool1] 监听到事件：com.xiaobei.spring.demo.event.MyApplicationEvent[source=Hello, World]
      */
     @Test
-    public void asyncApplicationEventCustomizedThreadFactory() {
+    public static void asyncApplicationEventCustomizedThreadFactory() {
         genericApplicationContextConfig(applicationContext -> {
             // 获取 {@code ApplicationEventMulticaster}
             ApplicationEventMulticaster applicationEventMulticaster =
                     applicationContext.getBean(APPLICATION_EVENT_MULTICASTER_BEAN_NAME, ApplicationEventMulticaster.class);
-            if(applicationEventMulticaster instanceof SimpleApplicationEventMulticaster) {
+            if (applicationEventMulticaster instanceof SimpleApplicationEventMulticaster) {
                 SimpleApplicationEventMulticaster multicaster = (SimpleApplicationEventMulticaster) applicationEventMulticaster;
-                multicaster.setTaskExecutor(Executors.newSingleThreadExecutor(new CustomizableThreadFactory("my-event-thread-pool")));
+                ExecutorService taskExecutor = Executors.newSingleThreadExecutor(new CustomizableThreadFactory("my-event-thread-pool"));
+                multicaster.setTaskExecutor(taskExecutor);
+                shutDownThePool(applicationEventMulticaster, taskExecutor);
             }
         });
     }
 
     /**
      * {@link GenericApplicationContext} 配置
+     *
      * @param multicasterConsumer 进行自定义 {@link ApplicationEventMulticaster} 的处理
      */
-    private void genericApplicationContextConfig(Consumer<GenericApplicationContext> multicasterConsumer) {
+    private static void genericApplicationContextConfig(Consumer<GenericApplicationContext> multicasterConsumer) {
         GenericApplicationContext applicationContext = new GenericApplicationContext();
         // 注册 Spring 事件监听器
         applicationContext.addApplicationListener(new MyApplicationListener());
@@ -98,9 +126,10 @@ public class AsyncEventHandlerDemo {
 
     /**
      * 配置 {@link AnnotationConfigApplicationContext} 并注解指定的 Class
+     *
      * @param clazz
      */
-    private void annotationConfigApplicationContextConfig(Class<?> clazz) {
+    private static void annotationConfigApplicationContextConfig(Class<?> clazz) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         // 注册配置bean
         applicationContext.register(clazz);
@@ -119,7 +148,7 @@ public class AsyncEventHandlerDemo {
      * [线程 ：main] 监听到事件：com.xiaobei.spring.demo.event.MyApplicationEvent[source=Hello, World]
      */
     @Test
-    public void syncApplicationEventByAnnotation() {
+    public static void syncApplicationEventByAnnotation() {
         annotationConfigApplicationContextConfig(SyncApplicationEventConfig.class);
     }
 
@@ -127,7 +156,7 @@ public class AsyncEventHandlerDemo {
 
         @EventListener
         public void applicationHandler(MyApplicationEvent event) {
-            System.out.printf("[线程 ：%s] 监听到事件：%s\n" ,Thread.currentThread().getName(), event);
+            System.out.printf("[线程 ：%s] 监听到事件：%s\n", Thread.currentThread().getName(), event);
         }
     }
 
@@ -141,7 +170,7 @@ public class AsyncEventHandlerDemo {
      * @see Async
      */
     @Test
-    public void asyncApplicationEventByAnnotationDefaultThreadFactory() {
+    public static void asyncApplicationEventByAnnotationDefaultThreadFactory() {
         annotationConfigApplicationContextConfig(AsyncApplicationEventConfig.class);
     }
 
@@ -151,7 +180,7 @@ public class AsyncEventHandlerDemo {
         @EventListener
         @Async
         public void applicationHandler(MyApplicationEvent event) {
-            System.out.printf("[线程 ：%s] 监听到事件：%s\n" ,Thread.currentThread().getName(), event);
+            System.out.printf("[线程 ：%s] 监听到事件：%s\n", Thread.currentThread().getName(), event);
         }
     }
 
@@ -166,7 +195,7 @@ public class AsyncEventHandlerDemo {
      * @see Async
      */
     @Test
-    public void asyncApplicationEventByAnnotationCustomizedThreadFactory() {
+    public static void asyncApplicationEventByAnnotationCustomizedThreadFactory() {
         annotationConfigApplicationContextConfig(AsyncApplicationEventConfigIncludeCustomizedThreadFactory.class);
     }
 
@@ -176,7 +205,7 @@ public class AsyncEventHandlerDemo {
         @EventListener
         @Async
         public void applicationHandler(MyApplicationEvent event) {
-            System.out.printf("[线程 ：%s] 监听到事件：%s\n" ,Thread.currentThread().getName(), event);
+            System.out.printf("[线程 ：%s] 监听到事件：%s\n", Thread.currentThread().getName(), event);
         }
 
         @Bean
