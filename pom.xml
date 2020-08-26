@@ -42,6 +42,7 @@
         <module>conversioin</module>
         <module>generic</module>
         <module>event</module>
+        <module>annotation</module>
     </modules>
 
     <dependencyManagement>
