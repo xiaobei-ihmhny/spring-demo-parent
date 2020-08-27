@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Profile;
+import org.springframework.core.env.AbstractEnvironment;
 import org.springframework.core.env.ConfigurableEnvironment;
 
 import java.util.function.Consumer;
@@ -25,6 +26,13 @@ public class ConditionalDemo {
      * <h2>运行结果：</h2>
      * 1
      * 1
+     *
+     * <h2>说明</h2>
+     * 此外的 {@link ConfigurableEnvironment#setDefaultProfiles(String...)} 可以通过外部化配置的方式指定
+     * 比如：指定：{@code -Dspring.profiles.default=odd}
+     *
+     * @see AbstractEnvironment#doGetDefaultProfiles()
+     * @see AbstractEnvironment#DEFAULT_PROFILES_PROPERTY_NAME
      * @see ConfigurableEnvironment
      */
     @Test
@@ -41,6 +49,12 @@ public class ConditionalDemo {
      * <h2>运行结果：</h2>
      * 2
      * 2
+     *
+     * <h2>说明</h2>
+     * 此外的 {@link ConfigurableEnvironment#setDefaultProfiles(String...)} 可以通过外部化配置的方式指定
+     * 比如：指定：{@code -Dspring.profiles.active=odd}
+     * @see org.springframework.core.env.AbstractEnvironment#doGetActiveProfiles()
+     * @see AbstractEnvironment#ACTIVE_PROFILES_PROPERTY_NAME
      * @see ConfigurableEnvironment
      */
     @Test
