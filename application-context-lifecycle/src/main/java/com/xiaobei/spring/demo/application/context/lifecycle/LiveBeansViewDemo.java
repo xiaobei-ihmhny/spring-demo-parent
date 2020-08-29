@@ -38,6 +38,9 @@ public class LiveBeansViewDemo {
      *
      * @param args
      * @throws IOException
+     * @see LiveBeansView#registerApplicationContext(org.springframework.context.ConfigurableApplicationContext)
+     * @see LiveBeansView#generateJson(java.util.Set)
+     *
      */
     public static void main(String[] args) throws IOException {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
