@@ -1,6 +1,6 @@
 package com.xiaobei.spring.demo;
 
-import com.xiaobei.spring.demo.domain.ObjectFactoryDomain;
+import com.xiaobei.spring.demo.domain.QuestionsDomain;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.ObjectProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,8 +34,8 @@ public class ObjectFactoryLazyLookupDemo {
 
         ObjectFactoryLazyLookupDemo lookupDemo =
                 applicationContext.getBean(ObjectFactoryLazyLookupDemo.class);
-        ObjectFactory<ObjectFactoryDomain> domain1 = lookupDemo.domain1;
-        ObjectProvider<ObjectFactoryDomain> domain2 = lookupDemo.domain2;
+        ObjectFactory<QuestionsDomain> domain1 = lookupDemo.domain1;
+        ObjectProvider<QuestionsDomain> domain2 = lookupDemo.domain2;
         System.out.println(domain1);
         System.out.println(domain2);
 
@@ -45,15 +45,15 @@ public class ObjectFactoryLazyLookupDemo {
     }
 
     @Autowired
-    private ObjectFactory<ObjectFactoryDomain> domain1;
+    private ObjectFactory<QuestionsDomain> domain1;
 
     @Autowired
-    private ObjectProvider<ObjectFactoryDomain> domain2;
+    private ObjectProvider<QuestionsDomain> domain2;
 
     @Bean
     @Lazy
-    public static ObjectFactoryDomain domain() {
-        ObjectFactoryDomain domain = new ObjectFactoryDomain();
+    public static QuestionsDomain domain() {
+        QuestionsDomain domain = new QuestionsDomain();
         domain.setId(246);
         domain.setName("加餐1：为什么说ObjectFactory提供的是延迟依赖查找?");
         return domain;
