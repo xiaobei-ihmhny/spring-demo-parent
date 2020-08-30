@@ -45,6 +45,7 @@
         <module>annotation</module>
         <module>environment</module>
         <module>application-context-lifecycle</module>
+        <module>questions</module>
     </modules>
 
     <dependencyManagement>
