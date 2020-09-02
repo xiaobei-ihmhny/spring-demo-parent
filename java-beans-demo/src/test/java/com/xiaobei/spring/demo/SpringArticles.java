@@ -56,7 +56,7 @@ public class SpringArticles {
         JSONArray list = data.getJSONArray("list");
         List<JSONObject> lessonList = list.toJavaList(JSONObject.class);
         AtomicInteger countSeconds = new AtomicInteger();
-        LocalDate today = LocalDate.of(2020, 7, 28);
+        LocalDate today = LocalDate.of(2020, 9, 2);
         for (JSONObject object : lessonList) {
             String title = object.getString("article_title").replace(" |", "");
             String time = object.getString("video_time");
@@ -65,7 +65,7 @@ public class SpringArticles {
             int localLessonCostSeconds = localTime.toSecondOfDay();
             countSeconds.addAndGet(localLessonCostSeconds);
             int currentCountSeconds = countSeconds.get();
-            if (currentCountSeconds >= 5400) {
+            if (currentCountSeconds >= 7200) {
 //                System.out.println("=========" + currentCountSeconds);
                 countSeconds.set(0);
                 today = today.plusDays(1L);
