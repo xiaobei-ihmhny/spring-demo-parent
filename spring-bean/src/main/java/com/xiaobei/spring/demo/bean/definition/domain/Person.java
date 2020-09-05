@@ -1,10 +1,12 @@
 package com.xiaobei.spring.demo.bean.definition.domain;
 
+import org.springframework.beans.factory.InitializingBean;
+
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/8/1 21:40
  */
-public class Person {
+public class Person implements InitializingBean {
 
     private Integer age;
 
@@ -47,5 +49,10 @@ public class Person {
                 "age=" + age +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        System.out.println("Person 初始化111...");
     }
 }

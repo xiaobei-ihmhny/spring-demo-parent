@@ -11,7 +11,9 @@ import java.util.Collection;
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020-07-30 12:53:53
  */
-public class UserRespoitory {
+public class UserRepository {
+
+    private User user;
 
     /**
      * 自定义Bean
@@ -25,8 +27,17 @@ public class UserRespoitory {
 
     private ObjectFactory<User> userObjectFactory;
 
+    private ApplicationContext applicationContext;
+
     private ObjectFactory<ApplicationContext> objectFactory;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public Collection<User> getUsers() {
         return users;
@@ -52,6 +63,14 @@ public class UserRespoitory {
         this.userObjectFactory = userObjectFactory;
     }
 
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public void setApplicationContext(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+    }
+
     public ObjectFactory<ApplicationContext> getObjectFactory() {
         return objectFactory;
     }
@@ -62,11 +81,14 @@ public class UserRespoitory {
 
     @Override
     public String toString() {
-        return "UserRespoitory{" +
-                "users=" + users +
-                ", beanFactory=" + beanFactory +
-                ", userObjectFactory=" + userObjectFactory +
-                ", objectFactory=" + objectFactory +
-                '}';
+        return "UserRepository{" +
+                "user=" + user +
+                ", \n  users=" + users +
+                ", \n  beanFactory=" + beanFactory +
+                ", \n  userObjectFactory=" + userObjectFactory +
+                ", \n  applicationContext=" + applicationContext +
+                ", \n  objectFactory=" + objectFactory +
+                ", \n  objectFactory.getObject=" + objectFactory.getObject() +
+                "\n}\n";
     }
 }

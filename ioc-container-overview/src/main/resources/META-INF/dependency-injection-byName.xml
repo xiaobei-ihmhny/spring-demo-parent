@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/util
+        https://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="user" class="com.xiaobei.spring.demo.ioc.overview.domain.User">
+        <property name="id" value="1"/>
+        <property name="name" value="xiaobei"/>
+    </bean>
+
+    <bean id="superUser" class="com.xiaobei.spring.demo.ioc.overview.domain.SuperUser" parent="user" primary="true">
+        <property name="address" value="北京"/>
+    </bean>
+
+    <!-- TODO 根据Bean名称进行依赖注入？这种是否属于根据名称依赖注入？ -->
+    <!-- <util:list> 属于硬编码（手动配置），不太好用 -->
+    <bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRepository">
+        <!-- 单个对象 -->
+        <property name="user" ref="user"/>
+        <!-- 集合对象 -->
+        <property name="users">
+            <util:list>
+                <ref bean="user"/>
+                <ref bean="superUser"/>
+            </util:list>
+        </property>
+    </bean>
+
+    <!-- 通过名称依赖注入 -->
+    <bean id="userRepositoryByName" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRepository" autowire="byName"/>
+</beans>

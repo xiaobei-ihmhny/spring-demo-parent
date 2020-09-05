@@ -10,7 +10,7 @@
     <import resource="dependency-lookup.xml"/>
 
     <!-- <util:list> 属于硬编码（手动配置），不太好用 -->
-    <!--<bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRespoitory">
+    <!--<bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRepository">
         <property name="users">
             <util:list>
                 <ref bean="user"/>
@@ -19,6 +19,6 @@
         </property>
     </bean>-->
 
-    <bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRespoitory" autowire="byType"/>
+    <bean id="userRepository" class="com.xiaobei.spring.demo.ioc.overview.repository.UserRepository" autowire="byType"/>
 
 </beans>

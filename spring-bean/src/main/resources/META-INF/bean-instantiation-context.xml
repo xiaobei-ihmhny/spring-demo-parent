@@ -21,5 +21,6 @@
     <bean id="defaultPersonFactory" class="com.xiaobei.spring.demo.bean.definition.factory.DefaultPersonFactory"/>
 
     <!-- 通过FactoryBean实例化bean -->
-    <bean id="person-by-factory-bean-with-xml" class="com.xiaobei.spring.demo.bean.definition.factory.PersonFactoryBean"/>
+    <bean id="person-by-factory-bean-with-xml"
+          class="com.xiaobei.spring.demo.bean.definition.factory.PersonFactoryBean"/>
 </beans>

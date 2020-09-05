@@ -63,9 +63,9 @@
     <!-- 激活 Spring注解驱动 -->
     <!--
         激活要在bean类中检测到的各种注释：
-        Spring的@Required和@Autowired，以及JSR 250的@ PostConstruct，
-        @ PreDestroy和@Resource（如果可用），JAX-WS的@WebServiceRef（如果可用），
-        EJB 3的@EJB（ （如果有），以及JPA的@PersistenceContext和@PersistenceUnit（如果有）。
+        Spring的@Required和@Autowired，以及JSR 250的@PostConstruct，
+        @PreDestroy和@Resource（如果可用），JAX-WS的@WebServiceRef（如果可用），
+        EJB 3的@EJB（（如果有），以及JPA的@PersistenceContext和@PersistenceUnit（如果有）。
         或者，您可以选择为这些注释激活各个BeanPostProcessor。
 
         注意：此标记不会激活对Spring的@Transactional或EJB 3的@TransactionAttribute批注的处理。
@@ -133,7 +133,7 @@
         公开当前平台为默认MBeanServer。
         自动检测WebLogic，WebSphere和JVM的平台MBeanServer。
 
-        公开的MBeanServer的默认bean名称是“ mbeanServer”。
+        公开的MBeanServer的默认bean名称是“mbeanServer”。
         这可以通过指定“id”属性来定制。
     -->
     <context:mbean-server/>
