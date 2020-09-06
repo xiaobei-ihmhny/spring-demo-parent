@@ -3,12 +3,10 @@ package com.xiaobei.spring.demo.bean.definition;
 import com.xiaobei.spring.demo.ioc.overview.domain.User;
 import org.junit.Test;
 import org.springframework.beans.factory.config.BeanDefinition;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.BeanDefinitionReaderUtils;
+import org.springframework.beans.factory.support.*;
 import org.springframework.context.annotation.AnnotatedBeanDefinitionReader;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 
 import java.util.Map;
 
@@ -30,6 +28,9 @@ public class ApiBeanDefinitionDemo {
      *
      * org.springframework.beans.factory.support.BeanDefinitionRegistry#registerBeanDefinition(java.lang.String, org.springframework.beans.factory.config.BeanDefinition)
      * {xiaobei-huihui=User{id=35, name='Java API命名方式配置元信息'}}
+     *
+     * 因为 {@link DefaultListableBeanFactory} 是 {@link BeanDefinitionRegistry} 的一个实现类，
+     * 故可以使用 {@link BeanDefinitionRegistry#registerBeanDefinition(java.lang.String, BeanDefinition)} 进行 {@link BeanDefinition} 的注册
      */
     @Test
     public void registerBeanDefinitionByApiWithBeanName() {
@@ -46,10 +47,14 @@ public class ApiBeanDefinitionDemo {
     }
 
     /**
+     * 使用 {@link BeanDefinitionReaderUtils#registerWithGeneratedName(AbstractBeanDefinition, BeanDefinitionRegistry)}
+     * 以非命名的方式注册 {@link BeanDefinition}
+     *
+     * <h2>运行结果：</h2>
      * {com.xiaobei.spring.demo.ioc.overview.domain.User#0=User{id=35, name='Java API非命名方式配置元信息'}}
      */
     @Test
-    public void registerBeanDefinitionByApiWithOutBeanName() {
+    public void registerBeanDefinitionByApiWithoutBeanName() {
         AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
         BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
         beanDefinitionBuilder.addPropertyValue("id", 35)
@@ -63,20 +68,27 @@ public class ApiBeanDefinitionDemo {
     }
 
     /**
-     * TODO 具体如何使用？
+     * TODO 是这样使用吗？
      * 使用{@link AnnotatedBeanDefinitionReader#register(java.lang.Class[])}
      */
     @Test
     public void registerBeanDefinitionByConfigurationClass() {
         AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
-        BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
-        beanDefinitionBuilder.addPropertyValue("id", 35)
-                .addPropertyValue("name", "Java API非命名方式配置元信息");
-        AbstractBeanDefinition beanDefinition = beanDefinitionBuilder.getBeanDefinition();
         AnnotatedBeanDefinitionReader reader = new AnnotatedBeanDefinitionReader(beanFactory);
+        reader.register(UserConfig.class);
         beanFactory.refresh();
         Map<String, User> beansOfType = beanFactory.getBeansOfType(User.class);
         System.out.println(beansOfType);
         beanFactory.close();
+    }
+
+    static class UserConfig {
+        @Bean
+        public User user() {
+            User user = new User();
+            user.setId(20200906L);
+            user.setName("AnnotatedBeanDefinitionReader注册Bean");
+            return user;
+        }
     }
 }

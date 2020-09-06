@@ -1,8 +1,10 @@
 package com.xiaobei.spring.demo.bean.definition;
 
 import com.xiaobei.spring.demo.ioc.overview.domain.User;
+import org.junit.Test;
 import org.springframework.beans.MutablePropertyValues;
 import org.springframework.beans.factory.config.BeanDefinition;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.GenericBeanDefinition;
 
@@ -13,13 +15,14 @@ import org.springframework.beans.factory.support.GenericBeanDefinition;
  */
 public class BeanDefinitionCreationDemo {
 
-    public static void main(String[] args) {
-        createBeanDefinitionByBeanDefinitionBuilder();
-        createBeanDefinitionByAbstractBeanDefinition();
-
-    }
-
-    private static BeanDefinition createBeanDefinitionByAbstractBeanDefinition() {
+    /**
+     * 通过 {@link AbstractBeanDefinition AbstractBeanDefinition}
+     * 的派生类 {@link GenericBeanDefinition GenericBeanDefinition}
+     * 来构建 {@link BeanDefinition BeanDefinition}
+     *
+     */
+    @Test
+    public void createBeanDefinitionByAbstractBeanDefinition() {
         // 2. 通过AbstractBeanDefinition的派生类 {@link org.springframework.beans.factory.support.GenericBeanDefinition}
         GenericBeanDefinition beanDefinition = new GenericBeanDefinition();
         // 设置Bean的类型
@@ -30,10 +33,14 @@ public class BeanDefinitionCreationDemo {
                 .add("name", "xiaobei");
         // 将批量操作的结果设置到BeanDefinition的属性中
         beanDefinition.setPropertyValues(propertyValues);
-        return beanDefinition;
+        System.out.println(beanDefinition);
     }
 
-    private static BeanDefinition createBeanDefinitionByBeanDefinitionBuilder() {
+    /**
+     * 通过 {@link BeanDefinitionBuilder BeanDefinitionBuilder} 来创建 {@link BeanDefinition BeanDefinition}
+     */
+    @Test
+    public void createBeanDefinitionByBeanDefinitionBuilder() {
         // 1. 使用BeanDefinitionBuilder进行bean元信息配置
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(User.class);
         // 通过属性设置
@@ -42,6 +49,6 @@ public class BeanDefinitionCreationDemo {
         // 获取BeanDefinition实例
         BeanDefinition builderBeanDefinition = builder.getBeanDefinition();
         // 其中的BeanDefinition并非终态，可以自定义修改
-        return builderBeanDefinition;
+        System.out.println(builderBeanDefinition);
     }
 }

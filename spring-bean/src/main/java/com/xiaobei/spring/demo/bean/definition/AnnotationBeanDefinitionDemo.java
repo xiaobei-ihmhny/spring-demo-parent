@@ -4,6 +4,7 @@ import com.xiaobei.spring.demo.bean.definition.register.BeanAnnotation;
 import com.xiaobei.spring.demo.bean.definition.register.ComponentAnnotation;
 import com.xiaobei.spring.demo.bean.definition.register.ImportAnnotation;
 import com.xiaobei.spring.demo.ioc.overview.domain.User;
+import org.junit.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
 
@@ -19,14 +20,6 @@ import java.util.Map;
  */
 public class AnnotationBeanDefinitionDemo {
 
-    public static void main(String[] args) {
-        // 创建BeanFactory容器
-        AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
-//        registerByBeanAnnotation(beanFactory);
-//        registerByComponentAnnotation(beanFactory);
-        registerByImportAnnotation(beanFactory);
-    }
-
     /**
      * 通过{@link org.springframework.context.annotation.Import} 注解来注册Spring BeanDefinition示例
      * 运行结果：
@@ -34,9 +27,10 @@ public class AnnotationBeanDefinitionDemo {
      * 容器中User类型的所有Bean为：{user=User{id=35, name='35 注册Spring Bean：如何将BeanDefinition注册到IoC容器？'}}
      * 容器中ComponentAnnotation类型的所有Bean为：{com.xiaobei.spring.demo.bean.definition.register.ComponentAnnotation=ComponentAnnotation{user=null}}
      * 容器中ImportAnnotation类型的所有Bean为：{importAnnotation=ImportAnnotation{componentAnnotation=null}}
-     * @param beanFactory
      */
-    private static void registerByImportAnnotation(AnnotationConfigApplicationContext beanFactory) {
+    @Test
+    public void registerByImportAnnotation() {
+        AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
         beanFactory.register(ImportAnnotation.class);
         // 启动应用上下文
         getAllBeans(beanFactory);
@@ -49,10 +43,10 @@ public class AnnotationBeanDefinitionDemo {
      * 容器中User类型的所有Bean为：{}
      * 容器中ComponentAnnotation类型的所有Bean为：{componentAnnotation=ComponentAnnotation{user=null}}
      * 容器中ImportAnnotation类型的所有Bean为：{}
-     *
-     * @param beanFactory
      */
-    private static void registerByComponentAnnotation(AnnotationConfigApplicationContext beanFactory) {
+    @Test
+    public void registerByComponentAnnotation() {
+        AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
         beanFactory.scan("com.xiaobei.spring.demo.bean.definition.register");
         getAllBeans(beanFactory);
     }
@@ -66,16 +60,16 @@ public class AnnotationBeanDefinitionDemo {
      * 容器中User类型的所有Bean为：{user=User{id=35, name='35 注册Spring Bean：如何将BeanDefinition注册到IoC容器？'}}
      * 容器中ComponentAnnotation类型的所有Bean为：{}
      * 容器中ImportAnnotation类型的所有Bean为：{}
-     *
-     * @param beanFactory
      */
-    private static void registerByBeanAnnotation(AnnotationConfigApplicationContext beanFactory) {
+    @Test
+    public void registerByBeanAnnotation() {
+        AnnotationConfigApplicationContext beanFactory = new AnnotationConfigApplicationContext();
         beanFactory.register(BeanAnnotation.class);
         // 启动应用上下文
         getAllBeans(beanFactory);
     }
 
-    private static void getAllBeans(AnnotationConfigApplicationContext beanFactory) {
+    private void getAllBeans(AnnotationConfigApplicationContext beanFactory) {
         beanFactory.refresh();
         // 按类型进行依赖查找
         Map<String, BeanAnnotation> beanAnnotationMap

@@ -2,6 +2,7 @@ package com.xiaobei.spring.demo.bean.definition;
 
 import com.xiaobei.spring.demo.bean.definition.domain.Person;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
+import org.springframework.beans.factory.config.SingletonBeanRegistry;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
@@ -12,6 +13,7 @@ public class SingletonBeanRegistrationDemo {
 
     /**
      * 通过外部单体对象来注册spring bean
+     * {@link SingletonBeanRegistry#registerSingleton(java.lang.String, java.lang.Object)}
      * @param args
      */
     public static void main(String[] args) {

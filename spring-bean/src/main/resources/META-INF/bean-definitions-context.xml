@@ -4,9 +4,26 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <import resource="classpath:/META-INF/dependency-lookup.xml"/>
+    <!-- BeanDefinition配置 -->
+    <bean id="user" class="com.xiaobei.spring.demo.ioc.overview.domain.User">
+        <property name="id" value="1"/>
+        <property name="name" value="xiaobei"/>
+    </bean>
 
+    <!-- 通过 alias 标签起别名-->
     <!-- 将Spring容器中名称为“user”的Bean关联/建立别名xiaobei-user -->
     <alias name="user" alias="xiaobei-user"/>
+
+    <!-- 通过半角的 “,” 来指定名称 + 别名  -->
+    <bean name="hui,hui-user" class="com.xiaobei.spring.demo.ioc.overview.domain.User">
+        <property name="id" value="2"/>
+        <property name="name" value="hui"/>
+    </bean>
+
+    <!-- 通过半角的 “;” 来指定名称 + 别名  -->
+    <bean name="natie;natie-user" class="com.xiaobei.spring.demo.ioc.overview.domain.User">
+        <property name="id" value="3"/>
+        <property name="name" value="natie"/>
+    </bean>
 
 </beans>

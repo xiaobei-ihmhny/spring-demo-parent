@@ -5,12 +5,17 @@ import com.xiaobei.spring.demo.bean.definition.factory.DefaultPersonFactory;
 import com.xiaobei.spring.demo.bean.definition.factory.PersonFactory;
 import org.junit.Test;
 import org.springframework.beans.factory.BeanFactory;
+import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.config.AutowireCapableBeanFactory;
 import org.springframework.beans.factory.serviceloader.ServiceLoaderFactoryBean;
+import org.springframework.beans.factory.support.AbstractBeanDefinition;
+import org.springframework.beans.factory.support.BeanDefinitionBuilder;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import java.util.Iterator;
 import java.util.ServiceLoader;
 
 /**
@@ -86,19 +91,74 @@ public class BeanInstantiationDemo {
     }
 
     /**
-     * 通过ServiceLoaderFactoryBean的方式实例化bean
+     * 通过ServiceLoaderFactoryBean的方式实例化bean，
+     * 通过这种方式可以允许用户自定义相关的实现
      *
-     * TODO 但此种方式注册的bean是一个ServiceLoader类型，并不是真实需要的bean？？？
+     * TODO 此方法获取到的bean并不是单例的？？
      */
     @Test
     @SuppressWarnings("unchecked")
     public void instanceBeanByServiceLoaderFactoryBeanWithXml() {
-        BeanFactory beanFactory =
+        ClassPathXmlApplicationContext beanFactory =
                 new ClassPathXmlApplicationContext("classpath:/META-INF/special-bean-instantiation-context.xml");
         ServiceLoader<PersonFactory> personFactoryServiceLoader = beanFactory.getBean("person-by-service-loader-factory-bean-with-xml", ServiceLoader.class);
         for (PersonFactory personFactory : personFactoryServiceLoader) {
             System.out.println(personFactory);
-            System.out.println(personFactory.getInstance());
+            Person instance = personFactory.getInstance();
+            System.out.println(instance);
+        }
+    }
+
+    /**
+     * 通过注解方式配置 SPI 加载
+     * @throws Exception
+     */
+    @Test
+    @SuppressWarnings("unchecked")
+    public void instanceBeanByServiceLoaderFactoryBeanWithAnnotation() throws Exception {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(PersonFactoryBeanConfig.class);
+        applicationContext.refresh();
+        ServiceLoader<FactoryBean> serviceLoader = applicationContext.getBean("serviceLoader", ServiceLoader.class);
+        for (FactoryBean personFactory : serviceLoader) {
+            System.out.println(personFactory);
+            System.out.println(personFactory.getObject());
+        }
+        applicationContext.close();
+    }
+
+    static class PersonFactoryBeanConfig {
+
+        @Bean
+        public ServiceLoaderFactoryBean serviceLoader() {
+            ServiceLoaderFactoryBean serviceLoader = new ServiceLoaderFactoryBean();
+            serviceLoader.setServiceType(FactoryBean.class);
+            return serviceLoader;
+        }
+    }
+
+    /**
+     * 通过 api 的方式注册相应的 bean，实现 SPI 加载
+     *
+     * <h2>运行结果：</h2>
+     * com.xiaobei.spring.demo.bean.definition.factory.PersonFactoryBean@4cc0edeb
+     * Person{age=36, name='36 实例化Spring Bean：通过FactoryBean，XML文件'}
+     * com.xiaobei.spring.demo.bean.definition.factory.CustomizedPersonFactoryBean@457e2f02
+     * Person{age=96, name='通过api方式利用spi加载相关bean'}
+     *
+     * @throws Exception
+     */
+    @Test
+    public void instanceBeanByServiceLoaderFactoryBeanWithApi() throws Exception {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        BeanDefinitionBuilder serviceLoaderFactoryBeanBuilder = BeanDefinitionBuilder.rootBeanDefinition(ServiceLoaderFactoryBean.class);
+        serviceLoaderFactoryBeanBuilder.addPropertyValue("serviceType", FactoryBean.class);
+        AbstractBeanDefinition beanDefinition = serviceLoaderFactoryBeanBuilder.getBeanDefinition();
+        beanFactory.registerBeanDefinition("serviceLoader", beanDefinition);
+        ServiceLoader<FactoryBean> serviceLoader = beanFactory.getBean("serviceLoader", ServiceLoader.class);
+        for (FactoryBean personFactory : serviceLoader) {
+            System.out.println(personFactory);
+            System.out.println(personFactory.getObject());
         }
     }
 
@@ -113,9 +173,6 @@ public class BeanInstantiationDemo {
                 new ClassPathXmlApplicationContext("classpath:/META-INF/special-bean-instantiation-context.xml");
         AutowireCapableBeanFactory beanFactory = applicationContext.getAutowireCapableBeanFactory();
         PersonFactory personFactory = beanFactory.createBean(DefaultPersonFactory.class);
-        Person person = beanFactory.createBean(Person.class);
         System.out.println(personFactory.getInstance());
-        System.out.println(person);
-
     }
 }

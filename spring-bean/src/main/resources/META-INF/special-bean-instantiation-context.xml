@@ -9,5 +9,4 @@
         <property name="serviceType" value="com.xiaobei.spring.demo.bean.definition.factory.PersonFactory"/>
     </bean>
 
-
 </beans>

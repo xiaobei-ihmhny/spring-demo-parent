@@ -1,1 +1,2 @@
 com.xiaobei.spring.demo.bean.definition.factory.DefaultPersonFactory
+com.xiaobei.spring.demo.bean.definition.factory.CustomizedPersonFactory
