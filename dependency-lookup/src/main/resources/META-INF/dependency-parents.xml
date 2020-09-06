@@ -19,6 +19,11 @@
         <property name="name" value="历史"/>
     </bean>
 
+    <bean id="customLesson" class="com.xiaobei.spring.demo.dependency.domain.CustomLesson">
+        <property name="id" value="45"/>
+        <property name="name" value="自定义课程"/>
+    </bean>
+
     <bean class="com.xiaobei.spring.demo.dependency.domain.LessonPrototype">
         <property name="id" value="45"/>
         <property name="name" value="computer"/>
