@@ -215,7 +215,8 @@ public class HierarchicalDependencyLookupDemo {
     }
 
     /**
-     * 逻辑调整为：如果父、子应用上下文中含有同类型、同名称的bean，但只有父上下文中存在注解标记，那将父应用上下文也查出来
+     * 逻辑调整为：如果父、子应用上下文中含有同类型、同名称的bean，
+     * 但只有父上下文中存在注解标记，那将父应用上下文也查出来
      * @param lbf
      * @param annotationType
      * @return
@@ -247,7 +248,8 @@ public class HierarchicalDependencyLookupDemo {
         merged.addAll(Arrays.asList(result));
         for (String beanName : parentResult) {
             if (!merged.contains(beanName) && (!hbf.containsLocalBean(beanName)
-                    || hbf instanceof ListableBeanFactory && ((ListableBeanFactory) hbf).findAnnotationOnBean(beanName, annotationType) == null)) {
+                    || (hbf instanceof ListableBeanFactory
+                    && ((ListableBeanFactory) hbf).findAnnotationOnBean(beanName, annotationType) == null))) {
                 merged.add(beanName);
             }
         }
