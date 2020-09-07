@@ -3,11 +3,13 @@ package com.xiaobei.spring.demo.dependency.injection;
 import com.xiaobei.spring.demo.dependency.domain.User;
 import com.xiaobei.spring.demo.dependency.domain.UserHolder;
 import org.junit.Test;
+import org.springframework.beans.PropertyValues;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
+import org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
+import org.springframework.context.annotation.*;
 
 import javax.annotation.Resource;
+import javax.inject.Inject;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
@@ -15,53 +17,118 @@ import javax.annotation.Resource;
  */
 public class DependencyFieldInjectionDemo {
 
-    @Autowired
-    private UserHolder userHolder;
+    @Configuration
+    static class UserConfig {
 
-    @Autowired
-    private static UserHolder userHolderStatic1;
+        @Bean
+        public User user() {
+            return new User().setAge(20200907).setName("naTie");
+        }
 
-    @Resource
-    private UserHolder userHolder2;
-
-//    @Resource
-    private static UserHolder userHolderStatic2;
-
-    @Bean
-    public UserHolder userHolder(User user) {
-        return new UserHolder().setUser(user);
+        @Bean
+        public UserHolder userHolder(User user) {
+            return new UserHolder(user);
+        }
     }
 
-    @Bean
-    public User user() {
-        return new User().setAge(57).setName("57 字段注入：为什么Spring官方文档没有单独列举这种注入方式？");
-    }
+    @Configuration
+    @Import(UserConfig.class)
+    static class AutowiredAnnotationConfig {
 
+        @Autowired
+        private UserHolder userHolder;
+
+        @Autowired
+        private static UserHolder userHolderStatic;
+
+    }
 
     /**
-     * 注意：{@link Autowired}不会处理静态字段，只会处理对象字段或实例字段
-     * {@link Autowired} 标注在静态字段上时，会忽略静态字段
-     * {@link Resource} 标注在静态字段上时，会抛出异常 {@link IllegalStateException} @Resource annotation is not supported on static fields
-     * 示例
-     * UserHolder{user=User{age=57, name='57 字段注入：为什么Spring官方文档没有单独列举这种注入方式？'}}
-     * UserHolder{user=User{age=57, name='57 字段注入：为什么Spring官方文档没有单独列举这种注入方式？'}}
-     * true
-     * true
+     * {@link Autowired} 注入时只能是对象字段（或实例字段），当在静态字段上使用时会直接忽略
+     * <h2>运行结果：</h2>
+     * UserHolder{user=User{age=20200907, name='naTie'}}
+     * null
+     * @see AutowiredAnnotationBeanPostProcessor#processInjection(java.lang.Object)
      */
     @Test
-    public void fieldInjection() {
+    public void fieldInjectionByAutowiredAnnotation() {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
         // 执行register操作后 DependencyFieldInjectionDemo 就会变成一个bean
-        applicationContext.register(DependencyFieldInjectionDemo.class);
+        applicationContext.register(AutowiredAnnotationConfig.class);
         applicationContext.refresh();
-        DependencyFieldInjectionDemo bean = applicationContext.getBean(DependencyFieldInjectionDemo.class);
-        System.out.println(bean.userHolder);
-        System.out.println(bean.userHolder2);
-        System.out.println(userHolderStatic1);
-        System.out.println(userHolderStatic2);
-        UserHolder userHolder = applicationContext.getBean(UserHolder.class);
-        System.out.println(bean.userHolder == bean.userHolder2);
-        System.out.println(bean.userHolder == userHolder);
-        applicationContext.close();
+        AutowiredAnnotationConfig autowiredConfig = applicationContext.getBean(AutowiredAnnotationConfig.class);
+        System.out.println(autowiredConfig.userHolder);
+        System.out.println(AutowiredAnnotationConfig.userHolderStatic);
     }
+
+
+    @Configuration
+    @Import(UserConfig.class)
+    static class ResourceAnnotationConfig {
+
+        @Resource
+        private UserHolder userHolder;
+
+        /**
+         * 将会抛出异常
+         */
+        @Resource
+        private static UserHolder userHolderStatic;
+
+    }
+
+    /**
+     * {@link Resource} 注入时只能是对象字段（或实例字段），当在静态字段上使用时将抛出异常：
+     * {@code java.lang.IllegalStateException: @Resource annotation is not supported on static fields}
+     * <h2>运行结果：</h2>
+     * UserHolder{user=User{age=20200907, name='naTie'}}
+     * null
+     * @see CommonAnnotationBeanPostProcessor#postProcessProperties(PropertyValues, Object, String)
+     */
+    @Test
+    public void fieldInjectionByResourceAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        // 执行register操作后 DependencyFieldInjectionDemo 就会变成一个bean
+        applicationContext.register(ResourceAnnotationConfig.class);
+        applicationContext.refresh();
+        ResourceAnnotationConfig resourceConfig = applicationContext.getBean(ResourceAnnotationConfig.class);
+        System.out.println(resourceConfig.userHolder);
+        System.out.println(ResourceAnnotationConfig.userHolderStatic);
+    }
+
+
+    @Configuration
+    @Import(UserConfig.class)
+    static class InjectAnnotationConfig {
+
+        @Inject
+        private UserHolder userHolder;
+
+        /**
+         * 将会抛出异常
+         */
+        @Inject
+        private static UserHolder userHolderStatic;
+
+    }
+
+    /**
+     * {@link Inject} 注入时只能是对象字段（或实例字段），当在静态字段上使用时会直接忽略
+     * <h2>运行结果：</h2>
+     * UserHolder{user=User{age=20200907, name='naTie'}}
+     * null
+     * @see AutowiredAnnotationBeanPostProcessor#processInjection(java.lang.Object)
+     */
+    @Test
+    public void fieldInjectionByInjectAnnotation() {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        // 执行register操作后 DependencyFieldInjectionDemo 就会变成一个bean
+        applicationContext.register(InjectAnnotationConfig.class);
+        applicationContext.refresh();
+        InjectAnnotationConfig injectConfig = applicationContext.getBean(InjectAnnotationConfig.class);
+        System.out.println(injectConfig.userHolder);
+        System.out.println(ResourceAnnotationConfig.userHolderStatic);
+    }
+
+
 }

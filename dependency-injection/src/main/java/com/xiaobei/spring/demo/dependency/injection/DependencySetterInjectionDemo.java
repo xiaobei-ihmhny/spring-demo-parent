@@ -19,6 +19,8 @@ public class DependencySetterInjectionDemo {
 
     /**
      * xml配置元信息进行手动的setter方法依赖注入示例
+     * <h2>运行结果：</h2>
+     * SuperUser{address='北京'} User{age=10, name='xiaobei'}
      * @see DefaultListableBeanFactory
      * @see XmlBeanDefinitionReader
      */
@@ -35,6 +37,8 @@ public class DependencySetterInjectionDemo {
 
     /**
      * 注解配置元信息进行手动的setter方法依赖注入示例
+     * <h2>运行结果：</h2>
+     * User{age=55, name='55 Setter方法依赖注入：Setter注入的原理是什么？'}
      */
     @Test
     public void annotationDependencySetterInjection() {
@@ -49,6 +53,8 @@ public class DependencySetterInjectionDemo {
 
     /**
      * API配置元信息进行手动的setter方法依赖注入示例
+     * <h2>运行结果：</h2>
+     * UserHolder{user=SuperUser{address='北京昌平'} User{age=55, name='API配置元信息'}}
      */
     @Test
     public void apiDependencySetterInjection() {
@@ -80,6 +86,8 @@ public class DependencySetterInjectionDemo {
 
     /**
      * 自动模式的setter方法依赖注入，使用byName类型
+     * <h2>运行结果：</h2>
+     * User{age=10, name='xiaobei'}
      */
     @Test
     public void autoWringByNameDependencySetterInjection() {
@@ -94,6 +102,8 @@ public class DependencySetterInjectionDemo {
 
     /**
      * 自动模式的setter方法依赖注入，使用byType类型
+     * <h2>运行结果：</h2>
+     * SuperUser{address='北京'} User{age=10, name='xiaobei'}
      */
     @Test
     public void autoWringByTypeDependencySetterInjection() {
