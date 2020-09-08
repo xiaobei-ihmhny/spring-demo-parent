@@ -5,13 +5,15 @@ import com.xiaobei.spring.demo.dependency.domain.SuperUser;
 import com.xiaobei.spring.demo.dependency.domain.User;
 import com.xiaobei.spring.demo.dependency.domain.UserHolder;
 import org.junit.Test;
-import org.springframework.beans.factory.support.AbstractBeanDefinition;
-import org.springframework.beans.factory.support.BeanDefinitionBuilder;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
+import org.springframework.beans.BeanWrapper;
+import org.springframework.beans.factory.config.ConstructorArgumentValues;
+import org.springframework.beans.factory.support.*;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import java.lang.reflect.Executable;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
@@ -85,7 +87,11 @@ public class DependencyConstructorInjectionDemo {
 
     /**
      * 构造器注入——自动模式：constructor
-     * TODO 构造器注入的原则？？？匹配名称 + 类型？？？
+     * <h2>注入原则如下：</h2>
+     * 1. 同类型的bean只有一个时，直接注入
+     * 2. 若同类型的bean存在多个，则查看有无 bean 名称与构造器参数名一样的，有直接注入，没有则注入失败
+     * @see ConstructorResolver#createArgumentArray(java.lang.String, RootBeanDefinition, ConstructorArgumentValues,
+     * BeanWrapper, Class[], String[], Executable, boolean, boolean)
      */
     @Test
     public void autoWringDependencyConstructorInjection() {
