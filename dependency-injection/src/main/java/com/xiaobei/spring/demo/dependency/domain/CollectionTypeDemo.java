@@ -14,23 +14,29 @@ public class CollectionTypeDemo {
     private byte[] byteArray;
 
     /**
-     * 标量类型——Boolean
+     * 原生类型
+     */
+    private EnumType[] enumTypeArray;
+
+    /**
+     * 集合类型——Boolean
      */
     private List<Boolean> booleanList;
 
     /**
-     * 标量类型——枚举类型
+     * 集合类型——枚举类型
      */
     private List<EnumType> enumTypeList;
 
-    private EnumType[] enumTypeArray;
+    /**
+     * 集合类型- Set
+     */
+    private SortedSet<Class> clazzSortedSet;
 
     /**
      * Spring类型
      */
     private Properties properties;
-
-    private SortedSet<Class> clazzSortedSet;
 
     public byte[] getByteArray() {
         return byteArray;
@@ -89,12 +95,12 @@ public class CollectionTypeDemo {
     @Override
     public String toString() {
         return "CollectionTypeDemo{" +
-                "byteArray=" + Arrays.toString(byteArray) +
-                ", booleanList=" + booleanList +
-                ", enumTypeList=" + enumTypeList +
-                ", enumTypeArray=" + Arrays.toString(enumTypeArray) +
-                ", properties=" + properties +
-                ", clazzSortedSet=" + clazzSortedSet +
-                '}';
+                "\n  byteArray=" + Arrays.toString(byteArray) +
+                ", \n  booleanList=" + booleanList +
+                ", \n  enumTypeList=" + enumTypeList +
+                ", \n  enumTypeArray=" + Arrays.toString(enumTypeArray) +
+                ", \n  properties=" + properties +
+                ", \n  clazzSortedSet=" + clazzSortedSet +
+                "\n  }\n";
     }
 }

@@ -6,24 +6,35 @@
 
     <bean id="basicTypeDemo" class="com.xiaobei.spring.demo.dependency.domain.CollectionTypeDemo">
         <property name="byteArray" value="abcdefg"/>
-        <!--<property name="booleanList" value="true,false,true"/>-->
-        <property name="booleanList">
-            <list>
-                <value>true</value>
-                <value>false</value>
-                <value>true</value>
-            </list>
-        </property>
-        <!--<property name="enumTypeSet" value="BEIJING,ZHUHAI"/>-->
+        <property name="booleanList" value="true, false, true, false"/>
+        <!-- 此种配置方式就不需要经过 spring 的类型转换了 -->
+<!--        <property name="booleanList">-->
+<!--            <list>-->
+<!--                <value>true</value>-->
+<!--                <value>false</value>-->
+<!--                <value>true</value>-->
+<!--            </list>-->
+<!--        </property>-->
         <property name="enumTypeArray" value="BEIJING,ZHUHAI"/>
-        <property name="enumTypeList">
-            <list>
-                <value>ZHUHAI</value>
-                <value>BEIJING</value>
-            </list>
-        </property>
+        <property name="enumTypeList" value="BEIJING,ZHUHAI"/>
         <property name="properties" value="1:name,2:age"/>
         <property name="clazzSortedSet" value="java.lang.Math,com.xiaobei.spring.demo.dependency.domain.User"/>
     </bean>
+
+    <!-- 自定义 boolean 类型 List 集合转换器 start -->
+    <bean id="booleanArrayEditor" class="com.xiaobei.spring.demo.dependency.conversion.BooleanArrayEditor">
+        <constructor-arg index="0" value="java.util.List"/>
+    </bean>
+
+    <bean id="customer" class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars">
+            <list>
+                <bean class="com.xiaobei.spring.demo.dependency.conversion.BooleanArrayEditorRegistrar">
+                    <constructor-arg index="0" ref="booleanArrayEditor"/>
+                </bean>
+            </list>
+        </property>
+    </bean>
+    <!-- 自定义 boolean 类型 List 集合转换器 end -->
 
 </beans>

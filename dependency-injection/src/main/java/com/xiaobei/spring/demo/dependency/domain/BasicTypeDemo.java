@@ -78,11 +78,11 @@ public class BasicTypeDemo {
     @Override
     public String toString() {
         return "BasicTypeDemo{" +
-                "byteType=" + byteType +
-                ", basicType=" + basicType +
-                ", enumType=" + enumType +
-                ", resourceLocation=" + resourceLocation +
-                ", clazz=" + clazz +
-                '}';
+                "\n  byteType=" + byteType +
+                ", \n  basicType=" + basicType +
+                ", \n  enumType=" + enumType +
+                ", \n  resourceLocation=" + resourceLocation +
+                ", \n  clazz=" + clazz +
+                "\n  }\n";
     }
 }
