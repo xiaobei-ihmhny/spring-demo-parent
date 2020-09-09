@@ -13,6 +13,4 @@ import java.lang.annotation.*;
 @Inherited
 @Qualifier
 public @interface QualifierDomainGroup {
-
-
 }
