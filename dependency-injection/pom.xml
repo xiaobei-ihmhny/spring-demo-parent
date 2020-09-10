@@ -22,9 +22,17 @@
             <artifactId>junit</artifactId>
             <scope>compile</scope>
         </dependency>
+        <!-- jsr 330 @inject 所在包 -->
         <dependency>
             <groupId>javax.inject</groupId>
             <artifactId>javax.inject</artifactId>
+        </dependency>
+        <!-- ejb 3.0 -->
+        <dependency>
+            <groupId>javax.ejb</groupId>
+            <artifactId>ejb-api</artifactId>
+            <version>3.0</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
