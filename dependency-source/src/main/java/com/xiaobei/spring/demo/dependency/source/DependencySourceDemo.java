@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.core.io.ResourceLoader;
 
 import javax.annotation.PostConstruct;
@@ -30,10 +31,26 @@ public class DependencySourceDemo {
     private ResourceLoader resourceLoader;
 
     /**
+     * <p>依赖查找的来源：BeanDefinition、单体对象
+     * <p>依赖注入的来源：BeanDefinition、单体对象、ResolvableDependency
+     * @param args
+     */
+    public static void main(String[] args) {
+        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
+        applicationContext.register(DependencySourceDemo.class);
+        applicationContext.refresh();
+        applicationContext.close();
+    }
+
+    /**
      * application == beanFactory：false
      * beanFactory == application.getBeanFactory：true
      * application == applicationEventPublisher：true
      * application == resourceLoader：true
+     *
+     * <h2>注意：</h2>
+     * 其中 {@link ApplicationContext#getAutowireCapableBeanFactory()}
+     * 在 {@link AbstractApplicationContext} 中的实现实际就是直接调用 {@link AbstractApplicationContext#getBeanFactory()}
      */
     @PostConstruct
     public void initByInject() {
@@ -65,16 +82,5 @@ public class DependencySourceDemo {
             System.err.println(e.getMessage());
         }
         return null;
-    }
-
-    /**
-     *
-     * @param args
-     */
-    public static void main(String[] args) {
-        AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext();
-        applicationContext.register(DependencySourceDemo.class);
-        applicationContext.refresh();
-        applicationContext.close();
     }
 }
