@@ -4,11 +4,10 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- 销毁时的配置 -->
-    <bean id="destructionDomain" class="com.xiaobei.spring.demo.bean.lifecycle.BeanDestructionLifecycleDemo.DestructionDomain"
-          destroy-method="initDestroy">
+    <!-- 销毁前的配置 -->
+    <bean id="beforeDestructionDomain" class="com.xiaobei.spring.demo.bean.lifecycle.BeanDestructionLifecycleDemo.BeforeDestructionDomain">
         <property name="id" value="1"/>
-        <property name="name" value="销毁的配置"/>
+        <property name="name" value="销毁前的配置"/>
     </bean>
 
 </beans>
