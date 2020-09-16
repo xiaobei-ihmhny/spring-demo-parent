@@ -5,7 +5,7 @@
         https://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- xml方式配置元信息 -->
-    <bean id="finishInitializationDomain" class="com.xiaobei.spring.demo.bean.lifecycle.domain.FinishInitializationDomain">
+    <bean id="finishInitializationDomain" class="com.xiaobei.spring.demo.bean.lifecycle.BeanFinishInitializationLifecycleDemo.FinishInitializationDomain">
         <property name="id" value="2"/>
         <property name="name" value="XML配置"/>
     </bean>
