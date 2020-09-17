@@ -16,13 +16,16 @@ import org.springframework.core.AttributeAccessor;
 import org.springframework.util.ObjectUtils;
 
 /**
+ * Bean 属性上下文 {@link AttributeAccessor} 与 {@link BeanMetadataElement} 示例
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/8/13 20:38
+ * @see AttributeAccessor
+ * @see BeanMetadataElement
  */
 public class BeanConfigurationMetadataDemo {
 
     /**
-     * 运行结果：
+     * <p>运行结果：</p>
      * PropertyValuesDomain{id=108, name='xiaobei'}
      *
      * {@link BeanMetadataElement#getSource()} 和 {@link AttributeAccessor}
@@ -33,7 +36,6 @@ public class BeanConfigurationMetadataDemo {
      *
      * @see AttributeAccessor#setAttribute(java.lang.String, java.lang.Object)
      * @see BeanMetadataElement#getSource()
-     *
      * @see BeanMetadataAttributeAccessor#setSource(java.lang.Object)
      * @see BeanMetadataAttributeAccessor#getSource()
      */
@@ -46,7 +48,7 @@ public class BeanConfigurationMetadataDemo {
         // org.springframework.core.AttributeAccessor.setAttribute
         beanDefinition.setAttribute("name","xiaobei");
         // 来源 org.springframework.beans.BeanMetadataAttributeAccessor.setSource
-        beanDefinition.setSource("标记beanDefinition的来源，以便做相应区分");
+        beanDefinition.setSource(BeanConfigurationMetadataDemo.class);
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
         // BeanPostProcessor
         beanFactory.addBeanPostProcessor(new BeanPostProcessor() {
@@ -59,10 +61,12 @@ public class BeanConfigurationMetadataDemo {
                     String name = (String) domainBeanDefinition.getAttribute("name");
                     // 可以根据 {@code BeanMetadataAttributeAccessor#getSource()}的结果做一定处理
                     Object source = domainBeanDefinition.getSource();
-                    System.out.println("当前BeanDefinition的来源为：" + source);
-                    PropertyValuesDomain domain = (PropertyValuesDomain) bean;
-                    domain.setName(name);
-                    return domain;
+                    if(BeanConfigurationMetadataDemo.class.equals(source)) {
+                        System.out.println("当前BeanDefinition的来源为：" + source);
+                        PropertyValuesDomain domain = (PropertyValuesDomain) bean;
+                        domain.setName(name);
+                        return domain;
+                    }
                 }
                 return null;
             }

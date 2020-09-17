@@ -79,12 +79,12 @@
     <!-- 激活 Spring @Component以及自定义注解扫描 -->
     <!--
         扫描类路径以查找将被自动注册为Spring Bean的带注释的组件。默认情况下，
-        将检测到Spring提供的@ Component，@ Repository，@ Service，@ Controller，
-        @ RestController，@ ControllerAdvice和@Configuration构造型。
+        将检测到Spring提供的@Component，@Repository，@Service，@Controller，
+        @RestController，@ControllerAdvice和@Configuration构造型。
 
-        注意：此标记暗含“ annotation-config”标记的作用，在组件类中激活@ Required，
-        @ Autowired，@ PostConstruct，@ PreDestroy，@ Resource，
-        @ PersistenceContext和@PersistenceUnit批注，这对于自动检测到的组件通常是必需的（无外部配置）。
+        注意：此标记暗含“ annotation-config”标记的作用，在组件类中激活@Required，
+        @Autowired，@PostConstruct，@PreDestroy，@Resource，
+        @PersistenceContext和@PersistenceUnit批注，这对于自动检测到的组件通常是必需的（无外部配置）。
         关闭“ annotation-config”属性以停用此默认行为，例如，为了使用自定义BeanPostProcessor定义来处理这些注释。
 
         注意：您可以在包路径中使用占位符，但只能根据系统属性（类似于资源路径）进行解析。
