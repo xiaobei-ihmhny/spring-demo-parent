@@ -19,6 +19,7 @@ import java.util.Map;
  * @see PropertySource
  * @see Repeatable
  * @see PropertySources
+ * @see ConfigurationClassParser#doProcessConfigurationClass(org.springframework.context.annotation.ConfigurationClass, org.springframework.context.annotation.ConfigurationClassParser.SourceClass)
  *
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/8/15 21:39
