@@ -19,7 +19,7 @@ import org.xml.sax.InputSource;
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/9/17 22:39
  */
-public class LoadBeanConfigurationMetadataDemo {
+public class XmlBeanBeanDefinitionDemo {
 
 
     /**
