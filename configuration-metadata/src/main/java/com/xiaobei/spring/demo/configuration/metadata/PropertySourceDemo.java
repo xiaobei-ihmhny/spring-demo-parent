@@ -13,9 +13,11 @@ import org.springframework.core.env.MutablePropertySources;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Properties;
 import java.util.function.Consumer;
 
 /**
+ * 基于 {@link Properties} 文件装载外部化配置
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/8/16 8:54
  */
@@ -85,9 +87,7 @@ public class PropertySourceDemo {
         // 启动spring应用上下文
         applicationContext.refresh();
         Map<String, ResourceDomain> beansMap = applicationContext.getBeansOfType(ResourceDomain.class);
-        beansMap.forEach((beanName, bean) -> {
-            System.out.println(beanName + " -> " + bean);
-        });
+        beansMap.forEach((beanName, bean) -> System.out.println(beanName + " -> " + bean));
         MutablePropertySources propertySources = applicationContext.getEnvironment().getPropertySources();
         propertySources.forEach(propertySource -> {
             if (propertySource instanceof MapPropertySource) {

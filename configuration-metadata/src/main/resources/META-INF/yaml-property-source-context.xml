@@ -9,5 +9,20 @@
         <property name="resources" value="classpath:/META-INF/application.yaml"/>
     </bean>
 
+    <!-- 3.1之后配置占位符转换的方式 -->
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="properties" ref="yamlProperties"/>
+        <property name="fileEncoding" value="UTF-8"/>
+    </bean>
+
+    <bean name="yamlProperties" class="org.springframework.beans.factory.config.YamlPropertiesFactoryBean">
+        <property name="resources" value="classpath:/META-INF/application.yaml"/>
+    </bean>
+
+    <bean class="com.xiaobei.spring.demo.configuration.metadata.domain.ResourceDomain">
+        <property name="name" value="${domain.name}"/>
+        <property name="enumType" value="${domain.enumType}"/>
+        <property name="id" value="${domain.id}"/>
+    </bean>
 
 </beans>

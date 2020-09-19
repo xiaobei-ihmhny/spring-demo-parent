@@ -11,6 +11,7 @@ import org.springframework.beans.factory.xml.BeanDefinitionParserDelegate;
 import org.springframework.beans.factory.xml.DefaultBeanDefinitionDocumentReader;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.beans.factory.xml.XmlReaderContext;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.AbstractRefreshableApplicationContext;
 import org.springframework.context.support.AbstractXmlApplicationContext;
@@ -50,7 +51,7 @@ public class ExtensibleXmlAuthoringDemo {
 
     /**
      *
-     * <h2>触发时机</h2>
+     * <h2>当使用 {@link ApplicationContext} 作为 IoC 容器时的触发时机</h2>
      * {@link AbstractApplicationContext#refresh()}
      * 中的方法{@code ConfigurableListableBeanFactory beanFactory = obtainFreshBeanFactory();}
      * {@link AbstractApplicationContext#obtainFreshBeanFactory()}
