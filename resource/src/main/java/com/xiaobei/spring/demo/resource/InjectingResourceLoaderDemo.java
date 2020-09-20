@@ -1,18 +1,13 @@
 package com.xiaobei.spring.demo.resource;
 
-import com.xiaobei.spring.demo.resource.utils.ResourceUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ResourceLoaderAware;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
 import javax.annotation.PostConstruct;
-import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
