@@ -39,7 +39,7 @@ public class EncodedFileSystemResourceLoaderDemo {
      */
     public static void main(String[] args) throws IOException {
         String separator = File.separator;
-        String filePath = System.getProperties().get("user.dir") + "/resource/src/main/java/com/xiaobei/spring/demo/resource/EncodedFileSystemResourceDemo.java";
+        String filePath = System.getProperties().get("user.dir") + "/resource/src/main/java/com/xiaobei/spring/demo/resource/EncodedFileSystemResourceLoaderDemo.java";
         if("\\".equals(separator)) {
             filePath = filePath.replace("/", separator);
         }

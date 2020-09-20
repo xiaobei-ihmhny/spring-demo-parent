@@ -26,6 +26,9 @@ public class EncodedFileSystemResourceDemo {
      * {@link WritableResource}的扩展实现 {@link FileSystemResource}的基本使用
      * 以及带编码的 {@link EncodedResource}的基本使用
      *
+     * <h2>运行结果：</h2>
+     * 当前文件的完整内容......
+     *
      * @param args
      * @throws IOException
      */
