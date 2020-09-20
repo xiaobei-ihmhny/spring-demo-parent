@@ -19,10 +19,7 @@ import org.springframework.beans.support.ResourceEditorRegistrar;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.EnvironmentAware;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.convert.TypeDescriptor;
@@ -138,12 +135,27 @@ public class InjectingResourceDemo {
         }
     }
 
+    /**
+     * 注册自定义类型转换器
+     * <h2>类型转换器的加载流程如下：</h2>
+     * <h3>首先加载 Spring 内建的类型转换器</h3>
+     * {@link AbstractApplicationContext#prepareBeanFactory(ConfigurableListableBeanFactory)}
+     * {@code beanFactory.addPropertyEditorRegistrar(new ResourceEditorRegistrar(this, getEnvironment()));} 注册Spring自有的类型转换器
+     * 会将 {@link ResourceEditorRegistrar} 添加到属性 {@link AbstractBeanFactory#propertyEditorRegistrars} 中，以便之后使用
+     * <h3>TODO 其次自定义类型转换器加载？？？</h3>
+     * 当 Bean 的后置处理类，比如：{@code org.springframework.context.annotation.internalConfigurationAnnotationProcessor} 初始化时会加载
+     * {@link AbstractAutowireCapableBeanFactory#instantiateBean(String, RootBeanDefinition)}
+     * 会注册自定义的转换器 {@code registerCustomEditors(bw);}
+     * {@link AbstractBeanFactory#registerCustomEditors(PropertyEditorRegistry)}
+     *
+     *
+     */
     static class ResourceCollectionEditorRegistrar implements PropertyEditorRegistrar {
 
         private final ResourceCollectionEditor resourceCollectionEditor;
 
-        public ResourceCollectionEditorRegistrar(ResourceCollectionEditor booleanArrayEditor) {
-            this.resourceCollectionEditor = booleanArrayEditor;
+        public ResourceCollectionEditorRegistrar(ResourceCollectionEditor resourceCollectionEditor) {
+            this.resourceCollectionEditor = resourceCollectionEditor;
         }
 
         @Override
@@ -152,6 +164,17 @@ public class InjectingResourceDemo {
         }
     }
 
+    /**
+     * 配置自定义类型转换器并加载
+     *
+     * TODO 处理警告信息：？？？
+     * {@code @Bean} method ResourceCollectionEditorConfig.customEditorConfigurer is non-static
+     * and returns an object assignable to Spring's BeanFactoryPostProcessor interface.
+     * This will result in a failure to process annotations such as @Autowired, @Resource and @PostConstruct
+     * within the method's declaring @Configuration class.
+     * Add the 'static' modifier to this method to avoid these container lifecycle issues;
+     * see @Bean javadoc for complete details.
+     */
     @Configuration
     static class ResourceCollectionEditorConfig {
 
@@ -177,6 +200,9 @@ public class InjectingResourceDemo {
     /**
      * <h2>运行结果：</h2>
      * name=131
+     * ====================================
+     * name=131
+     * name=\u4F9D\u8D56\u6CE8\u5165Spring Resource
      * ====================================
      * name=131
      * name=\u4F9D\u8D56\u6CE8\u5165Spring Resource
