@@ -10,14 +10,12 @@ import org.springframework.validation.DataBinder;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 /**
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/8/19 22:36
  */
+@SuppressWarnings("DuplicatedCode")
 public class DataBindingDemo {
 
     /**
@@ -29,13 +27,19 @@ public class DataBindingDemo {
      */
     @Test
     public void bindingOneToOne() {
-        processBinding(propertiesMap -> {
-            // id 对应 domain 中的 id 属性
-            propertiesMap.put("id", 153L);
-            // name 对应 domain 中的 name 属性
-            propertiesMap.put("name", "DataBinding绑定");
-        });
+        DataBindingDomain domain = new DataBindingDomain();
+        DataBinder binder = new DataBinder(domain, "domain");
+        Map<String, Object> propertiesMap = new HashMap<>();
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // name 对应 domain 中的 name 属性
+        propertiesMap.put("name", "DataBinding绑定");
+        PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
+        binder.bind(propertyValues);
+        System.out.println(domain);
     }
+
+
 
     /**
      * 此处涉及到 {@link DataBinder} 框架内部创建对象 {@link City}并绑定的过程
@@ -48,14 +52,18 @@ public class DataBindingDemo {
      */
     @Test
     public void bindingOneToOneIncludeNested() {
-        processBinding(propertiesMap -> {
-            // id 对应 domain 中的 id 属性
-            propertiesMap.put("id", 153L);
-            // name 对应 domain 中的 name 属性
-            propertiesMap.put("name", "DataBinding绑定");
-            // 嵌套属性 city 对应 domain中的 city
-            propertiesMap.put("city.name", "北京");
-        });
+        DataBindingDomain domain = new DataBindingDomain();
+        DataBinder binder = new DataBinder(domain, "domain");
+        Map<String, Object> propertiesMap = new HashMap<>();
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // name 对应 domain 中的 name 属性
+        propertiesMap.put("name", "DataBinding绑定");
+        // 嵌套属性 city 对应 domain中的 city
+        propertiesMap.put("city.name", "北京");
+        PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
+        binder.bind(propertyValues);
+        System.out.println(domain);
     }
 
     /**
@@ -70,14 +78,18 @@ public class DataBindingDemo {
      */
     @Test
     public void bindingIncludeNoField() {
-        processBinding(propertiesMap -> {
-            // id 对应 domain 中的 id 属性
-            propertiesMap.put("id", 153L);
-            // name 对应 domain 中的 name 属性
-            propertiesMap.put("name", "DataBinding绑定");
-            // address 不对应 domain 中的任何属性
-            propertiesMap.put("address", "北京天安门");
-        });
+        DataBindingDomain domain = new DataBindingDomain();
+        DataBinder binder = new DataBinder(domain, "domain");
+        Map<String, Object> propertiesMap = new HashMap<>();
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // name 对应 domain 中的 name 属性
+        propertiesMap.put("name", "DataBinding绑定");
+        // address 不对应 domain 中的任何属性
+        propertiesMap.put("address", "北京天安门");
+        PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
+        binder.bind(propertyValues);
+        System.out.println(domain);
     }
 
     /**
@@ -95,17 +107,20 @@ public class DataBindingDemo {
      */
     @Test
     public void bindingParameterAdjustOfStrong() {
-        processBinding(propertiesMap -> {
-            // id 对应 domain 中的 id 属性
-            propertiesMap.put("id", 153L);
-            // name 对应 domain 中的 name 属性
-            propertiesMap.put("name", "DataBinding绑定");
-            // address 不对应 domain 中的任何属性
-            propertiesMap.put("address", "北京天安门");
-        }, dataBinder -> {
-            // 取消忽略未知属性，当存在未知属性时，直接抛出异常
-            dataBinder.setIgnoreUnknownFields(false);
-        });
+        DataBindingDomain domain = new DataBindingDomain();
+        DataBinder binder = new DataBinder(domain, "domain");
+        Map<String, Object> propertiesMap = new HashMap<>();
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // name 对应 domain 中的 name 属性
+        propertiesMap.put("name", "DataBinding绑定");
+        // address 不对应 domain 中的任何属性
+        propertiesMap.put("address", "北京天安门");
+        PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
+        // 取消忽略未知属性，当存在未知属性时，直接抛出异常
+        binder.setIgnoreUnknownFields(false);
+        binder.bind(propertyValues);
+        System.out.println(domain);
     }
 
     /**
@@ -118,37 +133,46 @@ public class DataBindingDemo {
      */
     @Test
     public void bindingParameterAdjustOfStrong2() {
-        processBinding(propertiesMap -> {
-            // id 对应 domain 中的 id 属性
-            propertiesMap.put("id", 153L);
-            // name 对应 domain 中的 name 属性
-            propertiesMap.put("name", "DataBinding绑定");
-            // 嵌套属性 city 对应 domain中的 city
-            propertiesMap.put("city.name", "北京");
-        }, dataBinder -> {
-            // 取消忽略未知属性，当存在未知属性时，直接抛出异常
-            dataBinder.setAutoGrowNestedPaths(false);
-        });
+        DataBindingDomain domain = new DataBindingDomain();
+        DataBinder binder = new DataBinder(domain, "domain");
+        Map<String, Object> propertiesMap = new HashMap<>();
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // name 对应 domain 中的 name 属性
+        propertiesMap.put("name", "DataBinding绑定");
+        // 嵌套属性 city 对应 domain中的 city
+        propertiesMap.put("city.name", "北京");
+        PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
+        // 取消自动增加嵌套路径，当存在嵌套路径时，直接抛出异常
+        binder.setAutoGrowNestedPaths(false);
+        binder.bind(propertyValues);
+        System.out.println(domain);
     }
 
     /**
      * 绑定黑名单，黑名单上的数据将不会被绑定
+     *
+     * <h2>运行结果：</h2>
+     * DataBindingDomain{id=153, name='null', city=null}
+     * org.springframework.validation.BeanPropertyBindingResult: 0 errors
      */
     @Test
     public void bindingParameterAdjustOfWeak() {
-        DataBinder result = processBinding(
-                propertiesMap -> {
-                    // id 对应 domain 中的 id 属性
-                    propertiesMap.put("id", 153L);
-                    // name 对应 domain 中的 name 属性
-                    propertiesMap.put("name", "DataBinding绑定");
-                    // address 不对应 domain 中的任何属性
-                    propertiesMap.put("address", "北京天安门");
-                }, dataBinder -> {
-                    // 将 name 属性放入黑名单中，则 name 属性将不会被绑定
-                    dataBinder.setDisallowedFields("name");
-                });
-        System.out.println(result.getBindingResult());
+        DataBindingDomain domain = new DataBindingDomain();
+        DataBinder binder = new DataBinder(domain, "domain");
+        Map<String, Object> propertiesMap = new HashMap<>();
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // name 对应 domain 中的 name 属性
+        propertiesMap.put("name", "DataBinding绑定");
+        // address 不对应 domain 中的任何属性
+        propertiesMap.put("address", "北京天安门");
+        PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
+        // 将 name 属性放入黑名单中，则 name 属性将不会被绑定
+        binder.setDisallowedFields("name");
+        binder.bind(propertyValues);
+        System.out.println(domain);
+        System.out.println(binder.getBindingResult());
     }
 
     /**
@@ -164,46 +188,19 @@ public class DataBindingDemo {
      */
     @Test
     public void bindingParameterAdjustOfWeak2() {
-        DataBinder result = processBinding(
-                propertiesMap -> {
-                    // id 对应 domain 中的 id 属性
-                    propertiesMap.put("id", 153L);
-                    // address 不对应 domain 中的任何属性
-                    propertiesMap.put("address", "北京天安门");
-                }, dataBinder -> {
-                    // 将 name 属性放入黑名单中，则 name 属性将不会被绑定
-                    dataBinder.setRequiredFields("name");
-                });
-        System.out.println(result.getBindingResult());
-    }
-
-
-    /**
-     * 处理Binding
-     *
-     * @param propertiesMapConsumer
-     */
-    private void processBinding(Consumer<Map<String, Object>> propertiesMapConsumer) {
-        processBinding(propertiesMapConsumer, binderConsumer -> {
-        });
-    }
-
-    /**
-     * 处理Binding
-     *
-     * @param propertiesMapConsumer
-     * @param binderConsumer
-     * @return
-     */
-    private DataBinder processBinding(Consumer<Map<String, Object>> propertiesMapConsumer, Consumer<DataBinder> binderConsumer) {
         DataBindingDomain domain = new DataBindingDomain();
         DataBinder binder = new DataBinder(domain, "domain");
         Map<String, Object> propertiesMap = new HashMap<>();
-        propertiesMapConsumer.accept(propertiesMap);
+        // id 对应 domain 中的 id 属性
+        propertiesMap.put("id", 153L);
+        // address 不对应 domain 中的任何属性
+        propertiesMap.put("address", "北京天安门");
         PropertyValues propertyValues = new MutablePropertyValues(propertiesMap);
-        binderConsumer.accept(binder);
+        // 将 name 属性设置为必须属性
+        binder.setRequiredFields("name");
         binder.bind(propertyValues);
         System.out.println(domain);
-        return binder;
+        System.out.println(binder.getBindingResult());
     }
+
 }

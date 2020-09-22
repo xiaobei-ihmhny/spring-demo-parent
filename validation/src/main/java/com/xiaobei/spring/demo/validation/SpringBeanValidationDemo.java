@@ -1,6 +1,5 @@
 package com.xiaobei.spring.demo.validation;
 
-import com.xiaobei.spring.demo.validation.domain.ValidationDomain;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
