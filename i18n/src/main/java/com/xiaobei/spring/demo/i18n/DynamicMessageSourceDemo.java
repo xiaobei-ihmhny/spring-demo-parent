@@ -30,7 +30,7 @@ import java.util.concurrent.TimeUnit;
  * <p>
  * 1. 定位资源位置（ Properties 文件）
  * 2. 初始化 Properties 对象
- * 3. 实现 AbstractMessageSource#resolveCode 方法
+ * 3. 实现 {@link AbstractMessageSource#resolveCode} 方法
  * 4. 监听资源文件（Java NIO 2 WatchService）
  * 5. 使用线程池处理文件变化
  * 6. 重新装载 Properties 对象

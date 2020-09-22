@@ -47,6 +47,7 @@ public class MessageFormatDemo {
     /**
      * 当单个参数在字符串中被多次解析时，最后的匹配将是解析的最终结果。
      * 3.14, 3.1
+     * [3.1415]
      * [3.1]
      */
     @Test
@@ -64,6 +65,9 @@ public class MessageFormatDemo {
 
     /**
      * {@link ChoiceFormat} 使用示例
+     * The disk "MyDisk" contains no files file(s).
+     * The disk "MyDisk" contains one file file(s).
+     * The disk "MyDisk" contains 1,237 files file(s).
      */
     @Test
     public void messageFormatForChoiceFormat() {
@@ -124,8 +128,8 @@ public class MessageFormatDemo {
 
     /**
      * <h2>运行结果：</h2>
-     * Today is 下午05时06分58秒 on 2020年8月17日 星期一<br>
-     * Today is 下午05时06分58秒 on 2020-08-17 17:06:58<br>
+     * Today is 下午08时34分34秒 on 2020年9月21日 星期一
+     * Today is 20:34:34 on 2020-09-21 20:34:34
      *
      * 通过 {@link MessageFormat#setFormatByArgumentIndex(int, Format)}来重置 {@link Format}
      */
@@ -134,6 +138,7 @@ public class MessageFormatDemo {
         String pattern = "Today is {0, time, long} on {1, date, full}";
         MessageFormat messageFormat = new MessageFormat(pattern);
         System.out.println(messageFormat.format(new Object[]{new Date(), new Date()}));
+        messageFormat.setFormatByArgumentIndex(0, new SimpleDateFormat("HH:mm:ss"));
         messageFormat.setFormatByArgumentIndex(1, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
         System.out.println(messageFormat.format(new Object[]{new Date(), new Date()}));
     }
