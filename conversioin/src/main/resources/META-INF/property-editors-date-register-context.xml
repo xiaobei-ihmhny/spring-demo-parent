@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 将 DateDomain 类 注册为 Spring Bean -->
+    <bean id="domain" class="com.xiaobei.spring.demo.conversion.CustomDatePropertyEditorDemo.DateDomain">
+        <property name="date" value="2020-09-23 23:07:40"/>
+    </bean>
+
+    <!-- 自定义类型转换器 -->
+    <bean id="datePropertyEditor" class="com.xiaobei.spring.demo.conversion.CustomDatePropertyEditorDemo.DatePropertyEditor">
+        <constructor-arg value="yyyy-MM-dd HH:mm:ss"/>
+    </bean>
+
+    <!-- 注册自定义类型转换器注册器 -->
+    <bean id="customDatePropertyEditorRegister" class="com.xiaobei.spring.demo.conversion.CustomDatePropertyEditorDemo.DatePropertyEditorRegistrar">
+        <constructor-arg ref="datePropertyEditor"/>
+    </bean>
+
+    <!-- 将自定义的注册器添加到 Spring 内置的 BeanFactory 后置处理器中 -->
+    <bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+        <property name="propertyEditorRegistrars" ref="customDatePropertyEditorRegister"/>
+    </bean>
+
+</beans>
