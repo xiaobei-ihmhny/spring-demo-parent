@@ -16,27 +16,24 @@ public class DataBindingDomain {
         return id;
     }
 
-    public DataBindingDomain setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public String getName() {
         return name;
     }
 
-    public DataBindingDomain setName(String name) {
+    public void setName(String name) {
         this.name = name;
-        return this;
     }
 
     public City getCity() {
         return city;
     }
 
-    public DataBindingDomain setCity(City city) {
+    public void setCity(City city) {
         this.city = city;
-        return this;
     }
 
     @Override

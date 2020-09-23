@@ -21,11 +21,10 @@ public class JavaBeanDemo {
      *
      *
      * <h2>运行结果：</h2>
-     * java.beans.PropertyDescriptor[name=city; propertyType=class com.xiaobei.spring.demo.data.binding.domain.City; readMethod=public com.xiaobei.spring.demo.data.binding.domain.City com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.getCity()]
+     * java.beans.PropertyDescriptor[name=city; propertyType=class com.xiaobei.spring.demo.data.binding.domain.City; readMethod=public com.xiaobei.spring.demo.data.binding.domain.City com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.getCity(); writeMethod=public void com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.setCity(com.xiaobei.spring.demo.data.binding.domain.City)]
      * java.beans.PropertyDescriptor[name=class; propertyType=class java.lang.Class; readMethod=public final native java.lang.Class java.lang.Object.getClass()]
-     * java.beans.PropertyDescriptor[name=id; propertyType=class java.lang.Long; readMethod=public java.lang.Long com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.getId()]
-     * java.beans.PropertyDescriptor[name=name; propertyType=class java.lang.String; readMethod=public java.lang.String com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.getName()]
-     *
+     * java.beans.PropertyDescriptor[name=id; propertyType=class java.lang.Long; readMethod=public java.lang.Long com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.getId(); writeMethod=public void com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.setId(java.lang.Long)]
+     * java.beans.PropertyDescriptor[name=name; propertyType=class java.lang.String; readMethod=public java.lang.String com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.getName(); writeMethod=public void com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain.setName(java.lang.String)]
      *
      * @throws IntrospectionException
      */
