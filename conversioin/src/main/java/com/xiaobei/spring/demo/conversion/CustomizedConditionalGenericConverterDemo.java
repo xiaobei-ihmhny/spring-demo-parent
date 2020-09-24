@@ -75,11 +75,6 @@ public class CustomizedConditionalGenericConverterDemo {
      * -> setPropertyValues(PropertyValues) -> TypeConverter#convertIfNecessary
      * -> TypeConverterDelegate#convertIfNecessary -> PropertyEditor or ConversionService
      *
-     *
-     *
-     *
-     * @param args
-     *
      * @see org.springframework.beans.TypeConverterDelegate#convertIfNecessary(java.lang.String, java.lang.Object, java.lang.Object, java.lang.Class, TypeDescriptor)
      * @see AbstractApplicationContext#refresh()
      * {@code finishBeanFactoryInitialization(beanFactory);}

@@ -7,6 +7,7 @@
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd">
 
+    <!-- 1. 通过 ConversionServiceFactoryBean 进行注册 -->
     <!-- 声明 ConversionServiceFactoryBean 并且名称必须为 "conversionService" -->
     <!-- ConfigurableApplicationContext#CONVERSION_SERVICE_BEAN_NAME -->
     <bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
