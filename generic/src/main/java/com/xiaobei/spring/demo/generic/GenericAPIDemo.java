@@ -1,5 +1,7 @@
 package com.xiaobei.spring.demo.generic;
 
+import org.junit.Test;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
@@ -13,7 +15,8 @@ import java.util.stream.Stream;
  */
 public class GenericAPIDemo {
 
-    public static void main(String[] args) {
+    @Test
+    public void basicUsage() {
         // 原生类型 primitive types: int float double...
         Class intClass = int.class;
         // intClass: int
@@ -52,7 +55,37 @@ public class GenericAPIDemo {
         // genericInterfaces: interface java.io.Serializable
         Stream.of(genericInterfaces).forEach(
                 genericInterface -> System.out.printf("genericInterfaces: %s\n", genericInterface));
+    }
 
+    /**
+     * TODO 补充
+     */
+    @Test
+    public void basicUsage2() {
+        Class userServiceClass = UserService.class;
+        Type[] genericInterfaces = userServiceClass.getGenericInterfaces();
 
+    }
+
+    static class User {}
+
+    static class SuperUser extends User {}
+
+    static class Order {}
+
+    static class SuperOrder extends Order {}
+
+    static interface UserService<U extends User, O extends Order> {
+
+        U queryUser(O order);
+
+    }
+
+    static class UserServiceImpl implements UserService<SuperUser, SuperOrder> {
+
+        @Override
+        public SuperUser queryUser(SuperOrder order) {
+            return null;
+        }
     }
 }
