@@ -31,7 +31,7 @@ public class ExtensibleXmlAuthoringDemo {
      *
      * <h2>基于 Extensible XML authoring扩展Spring XML元素的步骤</h2>
      * 1. 编写 XML Schema 文件：定义XML结构
-     * 2. 自定义 NamespaceHander 实现：命名空间绑定
+     * 2. 自定义 NamespaceHandler 实现：命名空间绑定
      * 3. 自定义 BeanDefinitionParser 实现：XML元素与BeanDefinition解析
      * 4. 注册 XML 扩展：命名空间与 XML Schema 映射
      *
