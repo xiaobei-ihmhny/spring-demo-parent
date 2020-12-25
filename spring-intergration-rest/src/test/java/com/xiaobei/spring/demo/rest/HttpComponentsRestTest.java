@@ -185,6 +185,7 @@ public class HttpComponentsRestTest {
 
     /**
      * 部分字段序列化
+     * 其中视图相关的说明参见：<a href="https://www.baeldung.com/jackson-json-view-annotation">JacksonJsonView</a>
      * <pre>{@code
      * @ResponseBody
      * @RequestMapping(value = "/user/save",method = RequestMethod.POST)
