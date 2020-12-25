@@ -22,6 +22,8 @@
         <commons-io.version>2.6</commons-io.version>
         <spring-boot-dependencies.version>2.2.2.RELEASE</spring-boot-dependencies.version>
         <javax.el-api.version>3.0.0</javax.el-api.version>
+        <httpclient.version>4.5.13</httpclient.version>
+        <jackson.version>2.12.0</jackson.version>
     </properties>
 
     <modules>
@@ -46,6 +48,7 @@
         <module>environment</module>
         <module>application-context-lifecycle</module>
         <module>questions</module>
+        <module>spring-intergration-rest</module>
     </modules>
 
     <dependencyManagement>
@@ -94,6 +97,22 @@
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+            </dependency>
+            <!-- json相关包 -->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-core</artifactId>
+                <version>${jackson.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-databind</artifactId>
+                <version>${jackson.version}</version>
             </dependency>
             <dependency>
                 <groupId>junit</groupId>
@@ -146,6 +165,11 @@
                 <groupId>javax.el</groupId>
                 <artifactId>javax.el-api</artifactId>
                 <version>${javax.el-api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.httpcomponents</groupId>
+                <artifactId>httpclient</artifactId>
+                <version>${httpclient.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
