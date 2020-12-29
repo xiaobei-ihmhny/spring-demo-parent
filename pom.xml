@@ -49,6 +49,7 @@
         <module>application-context-lifecycle</module>
         <module>questions</module>
         <module>spring-intergration-rest</module>
+        <module>spring-webflux-parent</module>
     </modules>
 
     <dependencyManagement>
