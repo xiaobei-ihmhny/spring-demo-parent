@@ -130,6 +130,9 @@ public class DataBindingDemo {
      * org.springframework.beans.NullValueInNestedPathException:
      * Invalid property 'city' of bean class [com.xiaobei.spring.demo.data.binding.domain.DataBindingDomain]:
      * Value of nested property 'city' is null
+     *
+     * 当 {@link DataBinder#setAutoGrowNestedPaths(boolean)} 设置为 {@code false} 时，要想正常注入嵌套属性，
+     * 需要显式的创建嵌套对象。
      */
     @Test
     public void bindingParameterAdjustOfStrong2() {

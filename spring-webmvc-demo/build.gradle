@@ -1,13 +1,13 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    /* 配置 tomcat 插件 */
-    /* 此插件运行结束后其所用的java 进程不会自动结束，需要手动终止 */
-    dependencies {
-        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
-    }
-}
+//buildscript {
+//    repositories {
+//        jcenter()
+//    }
+//    /* 配置 tomcat 插件 */
+//    /* 此插件运行结束后其所用的java 进程不会自动结束，需要手动终止 */
+//    dependencies {
+//        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+//    }
+//}
 
 plugins {
     id 'java'
@@ -20,48 +20,6 @@ apply plugin: 'war'
 group 'com.xiaobei.springmvc.demo'
 version '1.0-SNAPSHOT'
 
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    implementation 'org.springframework:spring-webmvc'
-    implementation 'org.springframework:spring-test'
-    providedCompile group: 'javax.servlet', name: 'javax.servlet-api'
-    def tomcatVersion = '9.0.1'
-    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
-            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
-            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
-}
-configurations {
-    provided
-}
-sourceSets {
-    main{
-        //引入资源文件，打包时才会将配置文件植入war文件
-        resources.srcDirs = ["src/main/java"]
-    }
-    main.compileClasspath += configurations.provided
-    test.compileClasspath += configurations.provided
-    test.runtimeClasspath += configurations.provided
-}
-
-tomcat {
-    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
-    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
-    httpPort = 8090
-    enableSSL = false
-    daemon = false
-}
-/* TODO 不知道为何无法访问？ */
-tomcatRun {
-    reloadable = true
-    daemon = false
-    contextPath = '/'
-}
-/* TODO 目前 reloadable 仍无法生效 */
-tomcatRunWar {
-    reloadable = true
-    daemon = false
-    contextPath = '/'
-}
 
 configure(allprojects) { project ->
     /* 添加 dependencyManagement 插件 */
@@ -80,7 +38,7 @@ configure(allprojects) { project ->
     dependencyManagement {
         // TODO 报错！！！
         imports {
-            mavenBom "org.springframework:spring-framework-bom:5.3.2"
+            mavenBom "org.springframework:spring-framework-bom:5.2.2.RELEASE"
         }
         dependencies {
             /* junit5 测试相关 */
@@ -91,6 +49,12 @@ configure(allprojects) { project ->
                 entry 'junit-jupiter-params'
             }
             dependency group: 'javax.servlet', name: 'javax.servlet-api', version: '3.1.0'
+            dependency 'joda-time:joda-time:2.10.9'
+            dependencySet(group: 'com.fasterxml.jackson.core', version: '2.12.1') {
+                entry 'jackson-databind'
+                entry 'jackson-core'
+                entry 'jackson-annotations'
+            }
         }
     }
 }

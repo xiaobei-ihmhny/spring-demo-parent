@@ -1,1 +1,4 @@
 rootProject.name = 'spring-webmvc-demo'
+include 'xml-configuration-demo'
+include 'java-configuration-demo'
+

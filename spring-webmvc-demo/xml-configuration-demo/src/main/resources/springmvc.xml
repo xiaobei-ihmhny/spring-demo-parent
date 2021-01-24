@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        https://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- 相当于注解中的 @EnableWebMvc + @Configuration -->
+    <!-- 添加此标记后相当于添加了一些Bean，
+    参见：https://docs.spring.io/spring-framework/docs/current/reference/html/web.html#mvc-servlet-special-bean-types -->
+    <mvc:annotation-driven>
+        <!--  -->
+    </mvc:annotation-driven>
+
+</beans>

@@ -1,0 +1,68 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    /* 配置 tomcat 插件 */
+    /* 此插件运行结束后其所用的java 进程不会自动结束，需要手动终止 */
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.5'
+    }
+}
+
+plugins {
+    id 'java'
+    id "com.bmuschko.tomcat"
+}
+
+apply plugin: 'war'
+group 'com.xiaobei.springmvc.demo'
+version '1.0-SNAPSHOT'
+
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    implementation 'org.springframework:spring-webmvc'
+    implementation 'joda-time:joda-time'
+    /* @ResponseBody 完成自动 json转换所需 start */
+    implementation 'com.fasterxml.jackson.core:jackson-databind'
+    /* @ResponseBody 完成自动 json转换所需 end */
+    implementation 'org.springframework:spring-test'
+    providedCompile group: 'javax.servlet', name: 'javax.servlet-api'
+    def tomcatVersion = '9.0.1'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+            "org.apache.tomcat.embed:tomcat-embed-logging-juli:9.0.0.M6",
+            "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+configurations {
+    provided
+}
+sourceSets {
+    main{
+        //引入资源文件，打包时才会将配置文件植入war文件
+        resources.srcDirs = ["src/main/java"]
+    }
+    main.compileClasspath += configurations.provided
+    test.compileClasspath += configurations.provided
+    test.runtimeClasspath += configurations.provided
+}
+
+tomcat {
+    httpProtocol = 'org.apache.coyote.http11.Http11Nio2Protocol'
+    ajpProtocol  = 'org.apache.coyote.ajp.AjpNio2Protocol'
+    httpPort = 8091
+    enableSSL = false
+    daemon = false
+}
+/* TODO 不知道为何无法访问？ */
+tomcatRun {
+    reloadable = true
+    daemon = false
+    contextPath = '/'
+}
+/* TODO 目前 reloadable 仍无法生效 */
+tomcatRunWar {
+    reloadable = true
+    daemon = false
+    contextPath = '/'
+}
+
