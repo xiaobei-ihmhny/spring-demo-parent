@@ -23,8 +23,11 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter'
     implementation 'org.springframework:spring-webmvc'
     implementation 'joda-time:joda-time'
+    /* spring会选用json框架的优先级为： jackson -> gson -> jsonb */
     /* @ResponseBody 完成自动 json转换所需 start */
     implementation 'com.fasterxml.jackson.core:jackson-databind'
+    // gson 配置
+    compile group: 'com.google.code.gson', name: 'gson'
     /* @ResponseBody 完成自动 json转换所需 end */
     implementation 'org.springframework:spring-test'
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api'

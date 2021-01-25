@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @date 2021-01-22 18:43:43
  */
 @RestController
-public class DemoController implements ApplicationContextAware {
+public class DemoController {
 
     private ApplicationContext applicationContext;
 
@@ -39,10 +39,5 @@ public class DemoController implements ApplicationContextAware {
     @GetMapping("/int")
     public String parseInt(int id) {
         return "parseInt" + id;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
     }
 }

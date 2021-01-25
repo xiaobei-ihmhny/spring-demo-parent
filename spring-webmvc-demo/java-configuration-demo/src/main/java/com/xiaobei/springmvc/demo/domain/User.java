@@ -27,8 +27,8 @@ public class User implements Serializable {
      */
     @RequestParamName(name = "birth_day")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
-    @JsonProperty(value = "birth_day")
+//    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
+//    @JsonProperty(value = "birth_day")
     private Date birthDay;
 
     private Double age;
