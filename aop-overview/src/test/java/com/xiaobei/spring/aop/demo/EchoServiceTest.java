@@ -17,7 +17,7 @@ public class EchoServiceTest {
     @Test
     public void echo() {
         EchoService echoService = new DefaultEchoService();
-        echoService.echo("xiaobie");
+        echoService.echo("xiaobei");
     }
 
     /**

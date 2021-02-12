@@ -25,6 +25,9 @@
         <httpclient.version>4.5.13</httpclient.version>
         <jackson.version>2.12.0</jackson.version>
         <cglib.version>3.3.0</cglib.version>
+        <!-- 日志相关依赖 start -->
+        <logback.version>1.2.3</logback.version>
+        <!-- 日志相关依赖 end -->
     </properties>
 
     <modules>
@@ -178,6 +181,18 @@
                 <groupId>cglib</groupId>
                 <artifactId>cglib</artifactId>
                 <version>${cglib.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-core -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-core</artifactId>
+                <version>${logback.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/ch.qos.logback/logback-classic -->
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>${logback.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
