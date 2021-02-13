@@ -23,7 +23,9 @@ public class SpringRestTemplateConfig {
     @Bean(name = "restTemplate")
     @Profile(value = "httpComponents")
     public RestTemplate httpComponentsRestTemplate() {
-        RestTemplate restTemplate = new RestTemplate(new HttpComponentsClientHttpRequestFactory());
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+        requestFactory.setConnectTimeout(2000);
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
         List<HttpMessageConverter<?>> messageConverters = restTemplate.getMessageConverters();
         messageConverters.set(1, new StringHttpMessageConverter(StandardCharsets.UTF_8));
         return restTemplate;
