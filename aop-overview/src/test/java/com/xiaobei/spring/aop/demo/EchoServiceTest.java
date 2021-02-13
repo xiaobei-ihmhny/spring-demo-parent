@@ -1,5 +1,6 @@
 package com.xiaobei.spring.aop.demo;
 
+import net.sf.cglib.proxy.Enhancer;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Proxy;
@@ -40,11 +41,19 @@ public class EchoServiceTest {
     }
 
     /**
-     * TODO 待完善
+     * 使用 cglib 生成动态代理类
      */
     @Test
     public void cglibProxy() {
-        CglibProxyEchoService echoService = new CglibProxyEchoService();
+        Enhancer enhancer = new Enhancer();
+        // 继承被代理类
+        enhancer.setSuperclass(DefaultEchoService.class);
+        // 设置代理回调
+        enhancer.setCallback(new CglibProxyEchoService());
+        // 生成代理对象
+        DefaultEchoService echoService = (DefaultEchoService) enhancer.create();
+        // 调用代理类中的方法时会被 callback 中的回调方法拦截
+        echoService.echo("xiaobei");
     }
 
 }

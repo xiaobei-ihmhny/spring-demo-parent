@@ -2,6 +2,8 @@ package com.xiaobei.spring.aop.demo;
 
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
 
@@ -12,13 +14,16 @@ import java.lang.reflect.Method;
  */
 public class CglibProxyEchoService implements MethodInterceptor {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CglibProxyEchoService.class);
+
     @Override
     public Object intercept(Object target, Method method,
                             Object[] args, MethodProxy methodProxy) throws Throwable {
         long startTime = System.currentTimeMillis();
+        // 使用 methodProxy调用被代理对象的方法
         Object result = methodProxy.invokeSuper(target, args);
         long endTime = System.currentTimeMillis();
-        System.out.printf("当前方法执行耗时：%d", (endTime - startTime));
+        LOGGER.info("当前方法执行耗时：{}", (endTime - startTime));
         return result;
     }
 }
