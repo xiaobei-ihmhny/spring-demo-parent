@@ -28,6 +28,7 @@
         <!-- 日志相关依赖 start -->
         <logback.version>1.2.3</logback.version>
         <!-- 日志相关依赖 end -->
+        <aspectj.version>1.9.6</aspectj.version>
     </properties>
 
     <modules>
@@ -55,10 +56,16 @@
         <module>spring-intergration-rest</module>
         <module>spring-webflux-parent</module>
         <module>aop-overview</module>
+        <module>aop-features</module>
     </modules>
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-core</artifactId>
