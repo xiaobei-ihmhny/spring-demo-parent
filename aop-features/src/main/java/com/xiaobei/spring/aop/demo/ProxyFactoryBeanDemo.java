@@ -16,7 +16,7 @@ public class ProxyFactoryBeanDemo {
      */
     public static void main(String[] args) {
         ClassPathXmlApplicationContext applicationContext
-                = new ClassPathXmlApplicationContext("classpath:/META-INF/spring-aop-proxyfactory-config.xml");
+                = new ClassPathXmlApplicationContext("classpath:/META-INF/spring-aop-proxyfactorybean-config.xml");
         EchoService echoServiceProxy = applicationContext.getBean("echoServiceProxy", EchoService.class);
         echoServiceProxy.echo("tietie");
         applicationContext.close();
