@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 激活 aspectj -->
+    <aop:aspectj-autoproxy />
+
+    <bean id="sumService" class="com.xiaobei.spring.aop.demo.service.SumService">
+        <constructor-arg index="0" value="0"/>
+    </bean>
+
+    <bean id="afterAspectXmlDemo" class="com.xiaobei.spring.aop.demo.config.AfterAspectXmlDemo"/>
+
+    <!-- aop xml 顶级配置 -->
+    <aop:config>
+        <!-- 配置顶层的 pointcut，供所有的切面使用 -->
+        <aop:pointcut id="incrementAndGet" expression="target(com.xiaobei.spring.aop.demo.service.SumService)
+            &amp;&amp; execution(public int incrementAndGet(..))"/>
+        <!-- 配置切面A，并定义当前切面的顺序 order，其中 order越小优先级越高 -->
+        <aop:aspect ref="afterAspectXmlDemo">
+            <!-- 配置切面相关的 前置通知 -->
+            <aop:before method="before" pointcut-ref="incrementAndGet"/>
+            <!-- 配置切面相关的 finally 通知 -->
+            <aop:after method="after" pointcut-ref="incrementAndGet"/>
+            <!-- 配置切面相关的 方法调用后 通知 -->
+            <aop:after-returning method="afterReturning" pointcut-ref="incrementAndGet"/>
+            <!-- 配置切面相关的 异常通知 -->
+            <aop:after-throwing method="afterThrowing" pointcut-ref="incrementAndGet"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
