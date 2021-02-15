@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 激活 aspectj -->
+    <aop:aspectj-autoproxy />
+
+    <bean id="echoService" class="com.xiaobei.spring.aop.demo.service.CustomEchoService"/>
+
+    <bean id="aspectXmlDemo" class="com.xiaobei.spring.aop.demo.config.AspectXmlDemo"/>
+
+    <!-- aop xml 顶级配置 -->
+    <aop:config>
+        <!-- 配置顶层的 pointcut，供所有的切面使用 -->
+        <aop:pointcut id="anyPublicMethod" expression="execution(public * *(..))"/>
+        <!-- 配置某个切面 -->
+        <aop:aspect ref="aspectXmlDemo">
+            <!-- 配置该切面特有的 pointcut -->
+            <aop:pointcut id="anyEchoMethod" expression="execution(* echo(..))"/>
+            <!-- 配置切面相关的 前置通知 -->
+            <aop:before method="beforeAnyPublicMethod" pointcut-ref="anyPublicMethod"/>
+            <!-- 配置切面相关的 前置通知 -->
+            <aop:before method="beforeEchoMethod" pointcut-ref="anyEchoMethod"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
