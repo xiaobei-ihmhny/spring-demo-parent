@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 激活 aspectj -->
+    <aop:aspectj-autoproxy />
+
+    <bean id="echoService" class="com.xiaobei.spring.aop.demo.service.CustomEchoService"/>
+
+    <bean id="aspectAWithXml" class="com.xiaobei.spring.aop.demo.adviceorder.AspectAWithXml"/>
+
+    <bean id="aspectBWithXml" class="com.xiaobei.spring.aop.demo.adviceorder.AspectBWithXml"/>
+
+    <!-- aop xml 顶级配置 -->
+    <aop:config>
+        <!-- 配置顶层的 pointcut，供所有的切面使用 -->
+        <aop:pointcut id="customEchoService.echo" expression="target(com.xiaobei.spring.aop.demo.service.CustomEchoService)
+            &amp;&amp; execution(public String echo(String))"/>
+        <!-- 配置切面A，并定义当前切面的顺序 order，其中 order越小优先级越高 -->
+        <aop:aspect ref="aspectAWithXml" order="1">
+            <!-- 配置切面相关的 前置通知 -->
+            <aop:before method="beforeEchoMethodInAspectA" pointcut-ref="customEchoService.echo"/>
+        </aop:aspect>
+        <!-- 配置切面B，并定义当前切面的顺序 order，其中 order越小优先级越高 -->
+        <aop:aspect ref="aspectBWithXml" order="2">
+            <!-- 配置切面相关的 前置通知 -->
+            <aop:before method="beforeEchoMethodInAspectB" pointcut-ref="customEchoService.echo"/>
+        </aop:aspect>
+    </aop:config>
+
+</beans>
