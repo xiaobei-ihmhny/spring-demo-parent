@@ -26,6 +26,8 @@
             <aop:before method="beforeAnyPublicMethod" pointcut-ref="anyPublicMethod"/>
             <!-- 配置切面相关的 前置通知 -->
             <aop:before method="beforeEchoMethod" pointcut-ref="anyEchoMethod"/>
+            <!-- 配置切面相关的 环绕通知 -->
+            <aop:around method="aroundEchoMethod" pointcut-ref="anyEchoMethod"/>
         </aop:aspect>
     </aop:config>
 

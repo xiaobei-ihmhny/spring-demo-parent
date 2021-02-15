@@ -1,5 +1,6 @@
 package com.xiaobei.spring.aop.demo.config;
 
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,6 +19,16 @@ public class AspectXmlDemo {
 
     public void beforeEchoMethod() {
         LOGGER.info("@Before in any echo method.");
+    }
+
+    /**
+     * {@link org.aspectj.lang.annotation.Around} 拦截动作
+     * @param pjp
+     * @return
+     */
+    public Object aroundEchoMethod(ProceedingJoinPoint pjp) throws Throwable {
+        LOGGER.info("@Around in any echo method: {}", pjp.getSignature());
+        return pjp.proceed();
     }
 
 }
