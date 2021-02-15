@@ -1,5 +1,7 @@
 package com.xiaobei.spring.aop.demo.config;
 
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
@@ -36,6 +38,19 @@ public class AspectDemo {
     @Before("anyEchoMethod()")
     public void beforeEchoMethod() {
         LOGGER.info("@Before in any echo method.");
+    }
+
+    /**
+     * {@link Around @Around} 拦截
+     * 需要添加 {@link ProceedingJoinPoint} 来手动调用被拦截方法
+     * @param pjp
+     * @return
+     */
+    @Around("anyEchoMethod()")
+    public Object aroundAnyEchoMethod(ProceedingJoinPoint pjp) throws Throwable {
+        LOGGER.info("@Around before in any echo method.");
+        // 手动调用拦截方法
+        return pjp.proceed();
     }
 
 }
