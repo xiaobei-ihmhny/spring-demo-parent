@@ -1,6 +1,10 @@
 package com.xiaobei.spring.aop.demo.config;
 
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 使用 {@link Aspect @Aspect} 定义切面，需要是一个 Spring Bean
@@ -9,5 +13,29 @@ import org.aspectj.lang.annotation.Aspect;
  */
 @Aspect
 public class AspectDemo {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AspectDemo.class);
+
+    /**
+     * 定义一个匹配任何 public 方法的切入点表达式
+     * 其中的方法名即为 Pointcut 名称
+     */
+    @Pointcut("execution(public * *(..))")
+    private void anyPublicMethod() {
+    }
+
+    @Pointcut("execution(* echo(..))")
+    private void anyEchoMethod() {
+    }
+
+    @Before("anyPublicMethod()")
+    public void beforeAnyPublicMethod() {
+        LOGGER.info("@Before in any public method.");
+    }
+
+    @Before("anyEchoMethod()")
+    public void beforeEchoMethod() {
+        LOGGER.info("@Before in any echo method.");
+    }
 
 }

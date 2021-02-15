@@ -1,6 +1,7 @@
 package com.xiaobei.spring.aop.demo.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
@@ -13,9 +14,12 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class AspectJConfig {
 
-    @Bean
+    /**
+     * TODO 为什么这种方式将 @Aspect 标注的类定义为 bean 就无法完成初始化呢？
+     */
+    /*@Bean
     public AspectDemo aspectDemo() {
         return new AspectDemo();
-    }
+    }*/
 
 }
