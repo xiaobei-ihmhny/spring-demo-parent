@@ -1,6 +1,6 @@
 package com.xiaobei.spring.aop.demo;
 
-import com.xiaobei.spring.aop.demo.proxyfactory.EchoServiceMethodInterceptor;
+import com.xiaobei.spring.aop.demo.proxyfactory.CustomMethodInterceptor;
 import com.xiaobei.spring.aop.demo.service.CustomEchoService;
 import com.xiaobei.spring.aop.demo.service.DefaultEchoService;
 import com.xiaobei.spring.aop.demo.service.EchoService;
@@ -23,7 +23,7 @@ public class ProxyFactoryDemo {
         // 注入目标对象（被代理对象）
         ProxyFactory proxyFactory = new ProxyFactory(echoService);
         // 添加 Advice 实现 MethodInterceptor
-        proxyFactory.addAdvice(new EchoServiceMethodInterceptor());
+        proxyFactory.addAdvice(new CustomMethodInterceptor());
         // 获取代理对象
         CustomEchoService proxy = (CustomEchoService) proxyFactory.getProxy();
         proxy.echo("tietie");
@@ -36,7 +36,7 @@ public class ProxyFactoryDemo {
         // 注入目标对象（被代理对象）
         ProxyFactory proxyFactory = new ProxyFactory(echoService);
         // 添加 Advice 实现 MethodInterceptor
-        proxyFactory.addAdvice(new EchoServiceMethodInterceptor());
+        proxyFactory.addAdvice(new CustomMethodInterceptor());
         // 获取代理对象
         EchoService proxy = (EchoService) proxyFactory.getProxy();
         proxy.echo("tietie");

@@ -3,8 +3,6 @@ package com.xiaobei.spring.aop.demo.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.concurrent.CountDownLatch;
-
 /**
  * 求和
  * @author <a href="mailto:legend0508@163.com">xiaobei-ihmhny</a>

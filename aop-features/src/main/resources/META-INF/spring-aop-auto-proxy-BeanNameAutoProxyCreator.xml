@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 激活 aspectj 自动代理 -->
+    <aop:aspectj-autoproxy/>
+
+    <bean id="sumService" class="com.xiaobei.spring.aop.demo.service.SumService">
+        <constructor-arg index="0" value="0"/>
+    </bean>
+
+    <bean id="customEchoService" class="com.xiaobei.spring.aop.demo.service.CustomEchoService"/>
+
+    <bean id="defaultEchoService" class="com.xiaobei.spring.aop.demo.service.DefaultEchoService"/>
+
+    <bean id="customMethodInterceptor" class="com.xiaobei.spring.aop.demo.proxyfactory.CustomMethodInterceptor"/>
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <!-- 其中的 value 可以配置多个匹配规则，中间用 , 分隔 -->
+        <property name="beanNames" value="*EchoService"/>
+        <!-- TODO interceptorNames 可以配置 can be advisors or any advice type？ -->
+        <property name="interceptorNames">
+            <list>
+                <value>customMethodInterceptor</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

@@ -8,13 +8,13 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Method;
 
 /**
- * {@link com.xiaobei.spring.aop.demo.service.EchoService} 的方法拦截
+ * 方法拦截
  * @author <a href="mailto:legend0508@163.com">xiaobei-ihmhny</a>
  * @date 2021-02-14 22:42:42
  */
-public class EchoServiceMethodInterceptor implements MethodInterceptor {
+public class CustomMethodInterceptor implements MethodInterceptor {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(EchoServiceMethodInterceptor.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(CustomMethodInterceptor.class);
 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 激活 aspectj 自动代理 -->
+    <aop:aspectj-autoproxy/>
+
+    <bean id="sumService" class="com.xiaobei.spring.aop.demo.service.SumService">
+        <constructor-arg index="0" value="0"/>
+    </bean>
+
+    <bean id="customEchoService" class="com.xiaobei.spring.aop.demo.service.CustomEchoService"/>
+
+    <bean id="defaultEchoService" class="com.xiaobei.spring.aop.demo.service.DefaultEchoService"/>
+
+    <!-- 配置 Advice -->
+    <bean id="customMethodInterceptor" class="com.xiaobei.spring.aop.demo.proxyfactory.CustomMethodInterceptor"/>
+
+    <!-- 配置 Pointcut -->
+    <bean id="echoServicePointcut" class="com.xiaobei.spring.aop.demo.pointcut.EchoServicePointcut">
+        <constructor-arg index="0" value="echo"/>
+        <constructor-arg index="1" value="com.xiaobei.spring.aop.demo.service.DefaultEchoService"/>
+    </bean>
+
+    <!-- 组装 Pointcut 与 Advice 为 Advisor -->
+    <bean class="org.springframework.aop.support.DefaultPointcutAdvisor">
+        <constructor-arg index="0" ref="echoServicePointcut"/>
+        <constructor-arg index="1" ref="customMethodInterceptor"/>
+    </bean>
+
+    <!-- 配置自动代理 -->
+    <bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator"/>
+
+</beans>

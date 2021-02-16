@@ -10,7 +10,7 @@
     <bean id="echoService" class="com.xiaobei.spring.aop.demo.service.DefaultEchoService"/>
 
     <bean id="echoServiceMethodInterceptor"
-          class="com.xiaobei.spring.aop.demo.proxyfactory.EchoServiceMethodInterceptor"/>
+          class="com.xiaobei.spring.aop.demo.proxyfactory.CustomMethodInterceptor"/>
 
     <bean id="echoServiceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
         <!-- 被代理对象 -->

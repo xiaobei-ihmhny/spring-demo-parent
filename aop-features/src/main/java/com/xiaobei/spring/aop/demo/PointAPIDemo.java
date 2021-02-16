@@ -1,7 +1,7 @@
 package com.xiaobei.spring.aop.demo;
 
 import com.xiaobei.spring.aop.demo.pointcut.EchoServicePointcut;
-import com.xiaobei.spring.aop.demo.proxyfactory.EchoServiceMethodInterceptor;
+import com.xiaobei.spring.aop.demo.proxyfactory.CustomMethodInterceptor;
 import com.xiaobei.spring.aop.demo.service.CustomEchoService;
 import org.springframework.aop.framework.ProxyFactory;
 import org.springframework.aop.support.DefaultPointcutAdvisor;
@@ -21,7 +21,7 @@ public class PointAPIDemo {
         ProxyFactory proxyFactory = new ProxyFactory(customEchoService);
         // 将 Pointcut 适配成 Advisor
         DefaultPointcutAdvisor advisor
-                = new DefaultPointcutAdvisor(pointcut, new EchoServiceMethodInterceptor());
+                = new DefaultPointcutAdvisor(pointcut, new CustomMethodInterceptor());
         // 添加 Advisor
         proxyFactory.addAdvisor(advisor);
         // 通过 ProxyFactory 获得被代理类
