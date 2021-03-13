@@ -3,6 +3,8 @@ package com.xiaobei.spring.demo;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.xiaobei.spring.demo.util.GeekBangArticleUtils;
+import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -20,28 +22,47 @@ import java.util.concurrent.atomic.AtomicReference;
  * @author <a href="https://github.com/xiaobei-ihmhny">xiaobei-ihmhny</a>
  * @date 2020/7/28 20:32
  */
-public class SpringArticles {
+public class GeekBangArticlesPrintTest {
+
+    /**
+     * <a href="https://time.geekbang.org/course/intro/100042601">小马哥讲Spring核心编程思想</a>
+     */
+    @Test
+    public void printSpringArticles() {
+        String springFilePath = "E:\\git-project-workspace\\spring-demo-parent\\java-beans-demo\\src\\test\\resources\\spring.json";
+        GeekBangArticleUtils.printVideoLessonPlanForMarkDown(springFilePath,
+                "YYYY-MM-dd",
+                LocalDate.now(),
+                7200);
+    }
+
+    /**
+     * <a href="https://time.geekbang.org/course/intro/100066301">小马哥讲Spring AOP编程思想</a>
+     * https://time.geekbang.org/serv/v1/column/articles
+     */
+    @Test
+    public void printSpringAopArticles() {
+        String springAopFilePath = "E:\\git-project-workspace\\spring-demo-parent\\java-beans-demo\\src\\test\\resources\\spring-aop.json";
+        GeekBangArticleUtils.printVideoLessonPlanForMarkDown(springAopFilePath,
+                "YYYY-MM-dd",
+                LocalDate.now(),
+                7200);
+    }
+
+    /**
+     * <a href="https://time.geekbang.org/column/intro/100020801">MySQL实战45讲</a>
+     */
+    @Test
+    public void printMysql() {
+        String mysql45FilePath = "E:\\git-project-workspace\\spring-demo-parent\\java-beans-demo\\src\\test\\resources\\mysql-45.json";
+        GeekBangArticleUtils.printAudioLessonPlanForMarkDown(mysql45FilePath,
+                "YYYY-MM-dd",
+                LocalDate.now(),
+                7200);
+    }
 
     public static void main(String[] args) throws IOException {
         article();
-//        orderPriceAll();
-    }
-
-    private static void orderPriceAll() throws IOException {
-        byte[] jsonStr = Files.readAllBytes(
-                Paths.get("D:\\orders.json"));
-        JSONObject jsonObject = JSON.parseObject(new String(jsonStr));
-        JSONArray result = jsonObject.getJSONArray("result");
-        List<JSONObject> orderList = result.toJavaList(JSONObject.class);
-        final AtomicReference<BigDecimal> allPrice = new AtomicReference<>();
-        allPrice.set(BigDecimal.ZERO);
-        orderList.forEach(jsonObject1 -> {
-            BigDecimal goodsPrice = jsonObject1.getBigDecimal("goodsPrice");
-            BigDecimal current = allPrice.get();
-            allPrice.set(current.add(goodsPrice));
-        });
-        System.out.println(allPrice.get());
-
     }
 
     /**
@@ -50,7 +71,7 @@ public class SpringArticles {
      */
     private static void article() throws IOException {
         List<String> jsonStr = Files.readAllLines(
-                Paths.get("E:\\project\\spring-demo-parent\\java-beans-demo\\src\\test\\resources\\spring.json"));
+                Paths.get("E:\\git-project-workspace\\spring-demo-parent\\java-beans-demo\\src\\test\\resources\\spring.json"));
         JSONObject jsonObject = JSON.parseObject(jsonStr.get(0));
         JSONObject data = jsonObject.getJSONObject("data");
         JSONArray list = data.getJSONArray("list");
