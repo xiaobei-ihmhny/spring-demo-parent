@@ -25,6 +25,8 @@ public class SpringWebMvcServletInitializer
         return of("/*");
     }
 
+
+
     private static <T> T[] of(T... values) {
         return values;
     }

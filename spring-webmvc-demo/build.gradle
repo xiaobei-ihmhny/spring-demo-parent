@@ -63,6 +63,8 @@ configure(allprojects) { project ->
             dependency group: 'org.glassfish', name: 'javax.json', version: '1.1.4'
             dependency group: 'jakarta.json.bind', name: 'jakarta.json.bind-api', version: '2.0.0'
             dependency group: 'javax.json', name: 'javax.json-api', version: '1.1.4'
+            // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+            dependency group: 'commons-fileupload', name: 'commons-fileupload', version: '1.4'
         }
     }
 }

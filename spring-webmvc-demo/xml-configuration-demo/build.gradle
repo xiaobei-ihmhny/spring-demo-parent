@@ -23,6 +23,8 @@ dependencies {
     implementation 'org.springframework:spring-webmvc'
     implementation 'joda-time:joda-time'
     implementation 'org.springframework:spring-test'
+    // https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload
+    implementation group: 'commons-fileupload', name: 'commons-fileupload'
     providedCompile group: 'javax.servlet', name: 'javax.servlet-api'
     def tomcatVersion = '9.0.1'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
