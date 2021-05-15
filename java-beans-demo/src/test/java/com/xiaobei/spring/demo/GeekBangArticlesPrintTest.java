@@ -46,7 +46,7 @@ public class GeekBangArticlesPrintTest {
         GeekBangArticleUtils.printVideoLessonPlanForMarkDown(springAopFilePath,
                 "YYYY-MM-dd",
                 LocalDate.now(),
-                7200);
+                2400);
     }
 
     /**
@@ -58,7 +58,7 @@ public class GeekBangArticlesPrintTest {
         GeekBangArticleUtils.printAudioLessonPlanForMarkDown(mysql45FilePath,
                 "YYYY-MM-dd",
                 LocalDate.now(),
-                7200);
+                2400);
     }
 
     public static void main(String[] args) throws IOException {
